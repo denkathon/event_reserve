@@ -30,3 +30,12 @@ Homestead.json
 .DS_Store                 # macOS specific file
 /dist/                    # Distribution folder (if applicable)
 /build/                   # React build directory (if applicable)
+
+# Other specific to your environment
+/phpunit.cache
+/public/build
+.phpactor.json
+.env.backup
+.env.production
+/.fleet
+auth.json
