@@ -21,3 +21,12 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+# React/TypeScript specific
+*.tsbuildinfo             # TypeScript incremental build information
+*.log                     # Log files
+.vscode/                  # Visual Studio Code configuration files
+.idea/                    # IDE specific files (e.g., WebStorm, PhpStorm)
+.DS_Store                 # macOS specific file
+/dist/                    # Distribution folder (if applicable)
+/build/                   # React build directory (if applicable)
