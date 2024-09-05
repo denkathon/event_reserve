@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserHasEvent extends Model
 {
-    use HasFactory;
-    use HasUuids;
-    use SoftDeletes;
+    use HasFactory, HasUuids, SoftDeletes;
 
     // モデルに関連付けるテーブル
     protected $table = 'user_has_events';
@@ -31,6 +29,11 @@ class UserHasEvent extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    public function auth()
+    {
+        return $this->hasOne(Auth::class, 'user_id', 'id');
+    }
 
     public function user()
     {
