@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Flex } from '@chakra-ui/react';
-import Example from './components/Example';
+import ExamplePage from './components/Example';
 
 const RouteContents = () => {
     return (
         <Routes>
-            <Route path="/" element={<Example />} /> {/* Exampleページ */}
+            <Route path="/" element={<ExamplePage />} /> {/* Exampleページ */}
         </Routes>
     );
 }
