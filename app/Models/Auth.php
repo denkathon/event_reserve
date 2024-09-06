@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Model
+class Auth extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
     // モデルに関連付けるテーブル
-    protected $table = 'users';
+    protected $table = 'auths';
 
     // テーブルに関連付ける主キー
     protected $primaryKey = 'id';
@@ -22,22 +22,15 @@ class User extends Model
 
     // 登録・更新可能なカラムの指定
     protected $fillable = [
-        'name',
-        'e_mail',
-        'phone_number',
-        'has_stamp',
+        'user_name',
+        'password',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    public function auth()
+    public function user()
     {
-        return $this->belongsTo(Auth::class);
-    }
-
-    public function userHasEvents()
-    {
-        return $this->hasMany(UserHasEvent::class);
+        return $this->hasOne(User::class);
     }
 }
