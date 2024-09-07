@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TopPage from './pages/TopPage';  // トップページのコンポーネント
 import Header from './components/Header';  // ヘッダーコンポーネント
+import EventSpaceList from './pages/EventSpacePage';
 
 // RouteContentsはルーティングの設定を持つコンポーネント
-const RouteContents = () => {
+function RouteContents() {
     return (
         <Routes>
             <Route path="/" element={<TopPage />} /> {/* トップページ */}
+            <Route path="/eventspaces" element={<EventSpaceList />} /> {/* イベントスペースページ */}
             {/* ここに他のルートも追加できます */}
         </Routes>
     );
