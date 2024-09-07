@@ -1,27 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Flex } from '@chakra-ui/react';
-import ExamplePage from './components/Example';
+//import Example from './components/Example';
+import TopPage from './pages/TopPage'; 
+import Header from './components/Header';  // 新しく作成したHeaderコンポーネント
 
-const RouteContents = () => {
-    return (
-        <Routes>
-            <Route path="/" element={<ExamplePage />} /> {/* Exampleページ */}
-        </Routes>
+const rootElement = document.getElementById('app');
+
+//if (rootElement) {
+//    ReactDOM.createRoot(rootElement).render(<TopPage />);//toppageに変えました
+//}
+
+if (rootElement) {
+    ReactDOM.createRoot(rootElement).render(
+        <div>
+            <Header />  {/* ヘッダーをページ上部に表示 */}
+            <TopPage />  {/* トップページの内容を表示 */}
+        </div>
     );
 }
-
-function App() {
-    return (
-        <Router>
-            <Flex>
-                <RouteContents />
-            </Flex>
-        </Router>
-    );
-}
-
-// レンダリング部分
-const root = ReactDOM.createRoot(document.getElementById('app')!);
-root.render(<App />);
