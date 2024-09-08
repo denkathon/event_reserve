@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
 
 class EventController extends Controller
 {
@@ -11,6 +12,7 @@ class EventController extends Controller
      */
     public function index()
     {
+        return Event::all();
         //
     }
 
@@ -27,6 +29,15 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $event = new Event();
+        $event->name = $request->name;
+        $event->information = $request->information;
+        $event->venue_id = $request->venue_id;
+        $event->start_at = $request->start_at;
+        $event->end_at = $request->end_at;
+        $event->save();
+
+        return response()->json(['success' => true]);
         //
     }
 
