@@ -8,17 +8,23 @@ use App\Http\Controllers\VenueController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserHasEventController;
 
+// 認証が必要なルート
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 // 認証関係
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
+Route::middleware('auth:sanctum')->group(function () {
+    // Auth
+    Route::get('me', [AuthController::class, 'me']);
+    Route::post('logout', [AuthController::class, 'logout']);
+});
+
 // 認証が必要なルート
 Route::middleware('auth:sanctum')->group(function () {
-
-    // Auth関連
-    Route::get('me', [AuthController::class, 'me'])->name('auth.me'); // ログイン中のユーザー情報
-    Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout'); // ログアウト
-
     // User関連
     Route::get('users', [UserController::class, 'index'])->name('users.index'); // ユーザー一覧表示
     Route::get('users/{id}', [UserController::class, 'show'])->name('users.show'); // ユーザー詳細表示

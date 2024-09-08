@@ -13,4 +13,9 @@ export default defineConfig({
     resolve: {
         extensions: ['.js', '.ts', '.jsx', '.tsx'],
     },
+    server: {
+        proxy: {
+          '/api': 'http://localhost:8000',
+        },
+    },
 });

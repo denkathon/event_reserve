@@ -1,33 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import TopPage from './pages/TopPage';  // トップページのコンポーネント
-import Header from './components/Header';  // ヘッダーコンポーネント
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import TopPage from './pages/TopPage';
+import Header from './components/Header';
 import EventSpaceList from './pages/EventSpacePage';
+import axios from 'axios';
 
-// RouteContentsはルーティングの設定を持つコンポーネント
-function RouteContents() {
-    return (
-        <Routes>
-            <Route path="/" element={<TopPage />} /> {/* トップページ */}
-            <Route path="/eventspaces" element={<EventSpaceList />} /> {/* イベントスペースページ */}
-            {/* ここに他のルートも追加できます */}
-        </Routes>
-    );
-}
+const App: React.FC = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-// Appコンポーネントでルーティングとレイアウトを設定
-function App() {
+    useEffect(() => {
+        const checkAuthStatus = async () => {
+            try {
+                const token = localStorage.getItem('auth_token');
+                if (token) {
+                    await axios.get(`/api/me`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    setIsAuthenticated(true);
+                } else {
+                    setIsAuthenticated(false);
+                }
+            } catch (error) {
+                console.error('認証状態の確認に失敗しました:', error);
+                setIsAuthenticated(false);
+            }
+        };
+        checkAuthStatus();
+    }, []);
+
+    if (isAuthenticated === null) {
+        return <div>Loading...</div>; // 認証状態確認中
+    }
+
     return (
         <Router>
             <div>
-                <Header />  {/* ヘッダーを全ページで表示 */}
-                <RouteContents />  {/* ページコンテンツ */}
+                {isAuthenticated ? <Header /> : null}
+                <Routes>
+                    <Route
+                        path="/"
+                        element={isAuthenticated ? <TopPage /> : <Navigate to="/login" />}
+                    />
+                    <Route
+                        path="/eventspaces"
+                        element={isAuthenticated ? <EventSpaceList /> : <Navigate to="/login" />}
+                    />
+                    <Route
+                        path="/login"
+                        element={!isAuthenticated ? <LoginPage /> :  <Navigate to="/login" />}
+                    />
+                    <Route
+                        path="/register"
+                        element={!isAuthenticated ? <RegisterPage /> : <Navigate to="/login" />}
+                    />
+                    <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
+                </Routes>
             </div>
         </Router>
     );
-}
+};
 
-// root要素にAppコンポーネントをレンダリング
 const root = ReactDOM.createRoot(document.getElementById('app')!);
 root.render(<App />);
