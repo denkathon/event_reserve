@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('venues/{id}', [VenueController::class, 'destroy'])->name('venues.destroy'); // 会場削除
 
     // Event関連
+    Route::get('/events', [EventController::class, 'index']);
     Route::get('events', [EventController::class, 'index'])->name('events.index'); // イベント一覧表示
     Route::get('events/{id}', [EventController::class, 'show'])->name('events.show'); // イベント詳細表示
     Route::get('events/create', [EventController::class, 'create'])->name('events.create'); // イベント詳細新規作成

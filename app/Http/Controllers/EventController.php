@@ -11,7 +11,16 @@ class EventController extends Controller
      */
     public function index()
     {
+        // データベースから全てのイベントを取得
+        $events = Event::all();
+
+        // ビューにイベントデータを渡して表示
+        //return view('events.index', ['events' => $events]);
+
+        // JSONレスポンスを返す場合（API用）
+        return response()->json($events);
         //
+        
     }
 
     /**
