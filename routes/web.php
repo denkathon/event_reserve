@@ -7,12 +7,27 @@ use App\Http\Controllers\VenueController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserHasEventController;
 
+//確認
+Route::get('/', function () {
+    return view('pages.top.index');
+});
+
+Route::get('/toppage', function () {
+    return view('pages.toppage.index');
+});
+
+
+Route::get('/venue', function () {
+    return view('pages.venue.index'); // 他のページ
+});
+
+
 // 認証関係
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 // 認証が必要なルート
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
 
     // Auth関連
     Route::get('me', [AuthController::class, 'me'])->name('auth.me'); // ログイン中のユーザー情報
@@ -37,11 +52,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('users/destroy/{user_id}', [UserController::class, 'destroy'])->name('users.destroy'); // ユーザー削除
 
     // Venue関連
-    Route::get('venues', [VenueController::class, 'index'])->name('venues.index'); // 会場一覧表示
-    Route::get('venues/{id}', [VenueController::class, 'show'])->name('venues.show'); // 会場詳細表示
-    Route::post('venues', [VenueController::class, 'store'])->name('venues.store'); // 会場作成
-    Route::put('venues/{id}', [VenueController::class, 'update'])->name('venues.update'); // 会場更新
-    Route::delete('venues/{id}', [VenueController::class, 'destroy'])->name('venues.destroy'); // 会場削除
+    // Route::get('venues', [VenueController::class, 'index'])->name('venues.index'); // 会場一覧表示
+    // Route::get('venues/{id}', [VenueController::class, 'show'])->name('venues.show'); // 会場詳細表示
+    // Route::post('venues', [VenueController::class, 'store'])->name('venues.store'); // 会場作成
+    // Route::put('venues/{id}', [VenueController::class, 'update'])->name('venues.update'); // 会場更新
+    // Route::delete('venues/{id}', [VenueController::class, 'destroy'])->name('venues.destroy'); // 会場削除
+
+
+    Route::get('/venues_lineup/index', [VenuesLineupController::class,'index'])->name('venues_lineup.index');
+    Route::get('/venues_lineup/create', [VenuesLineupController::class,'create'])->name('venues_lineup.create');
+    Route::post('/venues_lineup/store', [VenuesLineupController::class,'store'])->name('venues_lineup.store');
+    Route::get('/venues_lineup/show/{coupon_lineup_id}', [VenuesLineupController::class,'show'])->name('venues_lineup.show');
+    Route::get('/venues_lineup/edit/{coupon_lineup_id}', [VenuesLineupController::class,'edit'])->name('venues_lineup.edit');
+    Route::post('/venues_lineup/update/{coupon_lineup_id}', [VenuesLineupController::class,'update'])->name('venues_lineup.update');
+    Route::post('/venues_lineup/destroy/{coupon_lineup_id}', [VenuesLineupController::class,'destroy'])->name('venues_lineup.destroy');
 
     // Event関連
     Route::get('events', [EventController::class, 'index'])->name('events.index'); // イベント一覧表示
@@ -57,7 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('user-events', [UserHasEventController::class, 'store'])->name('user_events.store'); // イベント参加
     Route::put('user-events/{id}', [UserHasEventController::class, 'update'])->name('user_events.update'); // イベント参加状況の更新
     Route::delete('user-events/{id}', [UserHasEventController::class, 'destroy'])->name('user_events.destroy'); // イベント参加取消
-});
+// });
 
 // Route::get('{any}', function () {
 //     return view('home');
