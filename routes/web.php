@@ -12,9 +12,9 @@ Route::get('/', function () {
     return view('pages.top.index');
 });
 
-Route::get('/toppage', function () {
-    return view('pages.toppage.index');
-});
+// Route::get('/toppage', function () {
+//     return view('pages.toppage.index');
+// });
 
 
 Route::get('/venue', function () {
@@ -59,13 +59,13 @@ Route::post('login', [AuthController::class, 'login']);
     // Route::delete('venues/{id}', [VenueController::class, 'destroy'])->name('venues.destroy'); // 会場削除
 
 
-    Route::get('/venues_lineup/index', [VenuesLineupController::class,'index'])->name('venues_lineup.index');
-    Route::get('/venues_lineup/create', [VenuesLineupController::class,'create'])->name('venues_lineup.create');
-    Route::post('/venues_lineup/store', [VenuesLineupController::class,'store'])->name('venues_lineup.store');
-    Route::get('/venues_lineup/show/{coupon_lineup_id}', [VenuesLineupController::class,'show'])->name('venues_lineup.show');
-    Route::get('/venues_lineup/edit/{coupon_lineup_id}', [VenuesLineupController::class,'edit'])->name('venues_lineup.edit');
-    Route::post('/venues_lineup/update/{coupon_lineup_id}', [VenuesLineupController::class,'update'])->name('venues_lineup.update');
-    Route::post('/venues_lineup/destroy/{coupon_lineup_id}', [VenuesLineupController::class,'destroy'])->name('venues_lineup.destroy');
+    Route::get('/venues/index', [VenuesController::class,'index'])->name('venues.index');
+    Route::get('/venues_lineup/create', [VenuesController::class,'create'])->name('venues.create');
+    Route::post('/venues_lineup/store', [VenuesController::class,'store'])->name('venues.store');
+    Route::get('/venues_lineup/show/{coupon_lineup_id}', [VenuesController::class,'show'])->name('venues.show');
+    Route::get('/venues_lineup/edit/{coupon_lineup_id}', [VenuesController::class,'edit'])->name('venues.edit');
+    Route::post('/venues_lineup/update/{coupon_lineup_id}', [VenuesController::class,'update'])->name('venues.update');
+    Route::post('/venues_lineup/destroy/{coupon_lineup_id}', [VenuesController::class,'destroy'])->name('venues.destroy');
 
     // Event関連
     Route::get('events', [EventController::class, 'index'])->name('events.index'); // イベント一覧表示
