@@ -8,7 +8,7 @@
         
         <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: clamp(10px, 2vw, 20px); white-space: nowrap; justify-content: flex-end; flex-wrap: wrap; max-width: 100%; padding-right: 20px;">
         <!-- <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: clamp(10px, 2vw, 20px); white-space: nowrap; justify-content: flex-end; flex-wrap: wrap; max-width: 100%;"> -->
-            <li style="flex-shrink: 1;"><a href="/mypage" style="color: #000; text-decoration: none; font-size: clamp(14px, 2vw, 24px);">マイページ</a></li>
+            <li style="flex-shrink: 1;"><a href="/users" style="color: #000; text-decoration: none; font-size: clamp(14px, 2vw, 24px);">マイページ</a></li>
             <li style="flex-shrink: 1;"><a href="/venue" style="color: #000; text-decoration: none; font-size: clamp(14px, 2vw, 24px);">イベントスペース一覧</a></li>
             <li style="flex-shrink: 1;"><a href="/events" style="color: #000; text-decoration: none; font-size: clamp(14px, 2vw, 24px);">イベント一覧</a></li>
         </ul>

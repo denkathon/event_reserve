@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
     protected $users;
     public function __construct()
     {
@@ -15,7 +16,9 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        return view('pages.user.index');
+        // return view('pages.user.index');
+        $users = User::all(); // すべてのユーザーを取得
+        return view('pages.user.index', compact('users'));
     }
 
     /**
@@ -39,8 +42,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $users = User::find($id);
-        $users->adjustTimezone();
+        $user = User::find($id);
+        $events = $user->userHasEvents->map(function ($userHasEvent){
+            return $userHasEvent->event;
+        });
         return view('pages.users.show', compact('users'));
     }
 
