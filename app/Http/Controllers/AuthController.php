@@ -86,9 +86,6 @@ class AuthController extends Controller
         try {
             $auth_id = $this->auth->insertAuth($request);
     
-            // デバッグ用の出力
-            \Log::info('Auth ID:', ['auth_id' => $auth_id]);
-    
             if ($auth_id) {
                 $registerUser = $this->user->insertUser($request, $auth_id);
                 DB::commit();
@@ -99,7 +96,6 @@ class AuthController extends Controller
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Registration failed:', ['error' => $e->getMessage()]);
             return redirect('/login')->with('flash.error', '登録に失敗しました。');
         }
     }
@@ -119,7 +115,6 @@ class AuthController extends Controller
             FacadesAuth::loginUsingId($user->id);
             return redirect('/')->with('flash.success', 'ログインに成功しました');
         }
-    
         return back()->withErrors(['login_error' => '認証に失敗しました']);
     }
     

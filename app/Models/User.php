@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
     use HasFactory, HasUuids, SoftDeletes;
 
@@ -22,6 +23,7 @@ class User extends Model
 
     // 登録・更新可能なカラムの指定
     protected $fillable = [
+        'auth_id',
         'name',
         'e_mail',
         'phone_number',
@@ -43,13 +45,9 @@ class User extends Model
 
     public function insertUser($request, string $auth_id)
     {
-        // デバッグ用の出力
-        \Log::info('Inserting User:', ['request' => $request->all(), 'auth_id' => $auth_id]);
-    
         return $this->create([
             'name' => $request->name,
             'auth_id' => $auth_id,
         ]);
     }
-    
 }
