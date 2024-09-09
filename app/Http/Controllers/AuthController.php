@@ -82,22 +82,28 @@ class AuthController extends Controller
         ]);
 
         DB::beginTransaction();
-
-        try{
+    
+        try {
             $auth_id = $this->auth->insertAuth($request);
-            if($auth_id){
+    
+            // デバッグ用の出力
+            \Log::info('Auth ID:', ['auth_id' => $auth_id]);
+    
+            if ($auth_id) {
                 $registerUser = $this->user->insertUser($request, $auth_id);
                 DB::commit();
                 return redirect('/venue')->with('flash.success', '登録に成功しました。');
-            }else{
+            } else {
                 DB::rollBack();
                 return redirect('/login')->with('flash.error', '登録に失敗しました。');
             }
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
+            \Log::error('Registration failed:', ['error' => $e->getMessage()]);
             return redirect('/login')->with('flash.error', '登録に失敗しました。');
-        };
+        }
     }
+    
 
     public function login(Request $request)
     {

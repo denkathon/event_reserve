@@ -19,7 +19,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
     Route::get('/', function () {
         return view('pages.top.index');
     });
@@ -65,7 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('user-events', [UserHasEventController::class, 'store'])->name('user_events.store'); // イベント参加
     Route::put('user-events/{id}', [UserHasEventController::class, 'update'])->name('user_events.update'); // イベント参加状況の更新
     Route::delete('user-events/{id}', [UserHasEventController::class, 'destroy'])->name('user_events.destroy'); // イベント参加取消
-});
+// });
 
 
     //以下は参考

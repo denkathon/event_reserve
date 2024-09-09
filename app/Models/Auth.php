@@ -41,7 +41,10 @@ class Auth extends Model
             'user_name' => $request->user_name,
             'password' => Hash::make($request->password),
         ]);
-
+    
+        // デバッグ用の出力
+        \Log::info('Created Auth:', ['auth' => $auth]);
+    
         return $auth->id;
     }
 }
