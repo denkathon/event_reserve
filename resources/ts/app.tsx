@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TopPage from './pages/TopPage';  // トップページのコンポーネント
 import Header from './components/Header';  // ヘッダーコンポーネント
+import Mypage from './Users/Mypage'; // マイページのコンポーネント
 
 // RouteContentsはルーティングの設定を持つコンポーネント
 const RouteContents = () => {
     return (
         <Routes>
             <Route path="/" element={<TopPage />} /> {/* トップページ */}
+            <Route path="/mypage" element={<Mypage />} /> {/* マイページ */}
             {/* ここに他のルートも追加できます */}
         </Routes>
     );

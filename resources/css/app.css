@@ -1,0 +1,25 @@
+.header {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+}
+
+.nav-links {
+  list-style-type: none; /* 点を非表示 */
+  padding: 0; /* パディングを削除 */
+  margin: 0; /* マージンを削除 */
+  display: flex; /* 横並びにする */
+}
+
+.nav-links li {
+  margin-right: 20px; /* リスト項目の間隔 */
+}
+
+.nav-links li a {
+  text-decoration: none; /* 下線を消す */
+  color: #333; /* テキストの色 */
+  font-weight: bold; /* 太字にする */
+}
+
+.nav-links li a:hover {
+  color: #007BFF; /* ホバー時の色 */
+}
