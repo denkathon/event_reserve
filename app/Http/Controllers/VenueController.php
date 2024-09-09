@@ -11,7 +11,8 @@ class VenueController extends Controller
      */
     public function index()
     {
-        //
+        $venues = Venue::all();
+        return view('pages.venue.index', ['venues' => $venues]);
     }
 
     /**
