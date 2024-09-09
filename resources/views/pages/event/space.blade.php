@@ -37,7 +37,7 @@
                                 @endphp
                                 <td>
                                     @if($event)
-                                        <a href="{{ route('event.show', ['event_id' => $event->id]) }}" class="btn event-btn">{{ $event->name }}</a>
+                                        <button type="button" class="btn event-btn" data-event-id="{{ $event->id }}">{{ $event->name }}</button>
                                     @else
                                         <a href="javascript:void(0);" onclick="navigateToCreatePage('{{ $startAt }}', '{{ $endAt }}')" class="btn empty-btn">予約する</a>
                                     @endif
@@ -51,12 +51,53 @@
     @endfor
 </div>
 
+<!-- モーダルのHTML -->
+<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">イベント詳細</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="eventName"></p>
+                <p id="eventVenue"></p>
+                <p id="eventInfo"></p>
+                <p id="eventTime"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- JSで新規イベント作成ページに遷移 -->
 <script>
     function navigateToCreatePage(startAt, endAt) {
         const url = `/event/create?start_at=${startAt}&end_at=${endAt}`;
         window.location.href = url;
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // イベントデータを埋め込む
+        const events = @json($events);
+
+        // ボタンがクリックされたときの処理
+        document.querySelectorAll('.event-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const eventId = this.dataset.eventId;
+                const event = events.find(event => event.id === eventId);
+                
+                if (event) {
+                    document.getElementById('eventName').textContent = `イベント名: ${event.name}`;
+                    document.getElementById('eventVenue').textContent = `会場: ${event.venue_id}`; // 実際には会場名などに変換する必要があります
+                    document.getElementById('eventInfo').textContent = `情報: ${event.information}`;
+                    document.getElementById('eventTime').textContent = `時間: ${event.start_at} 〜 ${event.end_at}`;
+                    
+                    // モーダルを表示
+                    new bootstrap.Modal(document.getElementById('eventModal')).show();
+                }
+            });
+        });
+    });
 </script>
 
 @endsection
