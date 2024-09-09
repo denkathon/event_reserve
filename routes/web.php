@@ -7,21 +7,6 @@ use App\Http\Controllers\VenueController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserHasEventController;
 
-//確認
-Route::get('/', function () {
-    return view('pages.top.index');
-});
-
-Route::get('/toppage', function () {
-    return view('pages.toppage.index');
-});
-
-
-Route::get('/venue', function () {
-    return view('pages.venue.index'); // 他のページ
-});
-
-
 Route::get('/login', function () {
     return view('pages.auth.login');
 })->name('login')->middleware('guest');
@@ -30,11 +15,17 @@ Route::get('/register', function () {
     return view('pages.auth.register');
 })->name('register')->middleware('guest');
 
-Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/', function () {
+        return view('pages.top.index');
+    });
+    
+    Route::get('/venue', function () {
+        return view('pages.venue.index');
+    });
+
     Route::get('users', [UserController::class, 'index'])->name('users.index'); // ユーザー一覧表示
     Route::post('users/store', [UserController::class, 'store'])->name('users.store'); // ユーザー作成
     Route::get('users/show/{user_id}', [UserController::class, 'show'])->name('users.show'); // ユーザー詳細表示
