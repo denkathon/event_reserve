@@ -7,47 +7,42 @@ use App\Http\Controllers\VenueController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserHasEventController;
 
+
+Route::get('/login', function () {
+    return view('pages.auth.login');
+})->name('login')->middleware('guest');
+
+Route::get('/register', function () {
+    return view('pages.auth.register');
+})->name('register')->middleware('guest');
+
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+//Route::middleware('auth:sanctum')->group(function () {
+      
 //確認
-Route::get('/', function () {
-    return view('pages.top.index');
-});
 
-// Route::get('/toppage', function () {
-//     return view('pages.toppage.index');
-// });
+    //table plus
+    Route::get('/venue', [VenueController::class, 'index']);
+    Route::get('/', function () {
+        return view('pages.top.index');
+    });
 
-
-Route::get('/venue', function () {
-    return view('pages.venue.index'); // 他のページ
-});
+    Route::get('/toppage', function () {
+        return view('pages.toppage.index');
+    });
 
 
-// 認証関係
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+    // Route::get('/venue', function () {
+    //     return view('pages.venue.index'); // 他のページ
+    // });
 
-// 認証が必要なルート
-// Route::middleware('auth:sanctum')->group(function () {
-
-    // Auth関連
-    Route::get('me', [AuthController::class, 'me'])->name('auth.me'); // ログイン中のユーザー情報
-    Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout'); // ログアウト
-
-
-    //以下は参考
-    // Route::get('/coupon_lineup/index', [CouponLineupController::class,'index'])->name('coupon_lineup.index');
-    // Route::get('/coupon_lineup/create', [CouponLineupController::class,'create'])->name('coupon_lineup.create');
-    // Route::post('/coupon_lineup/store', [CouponLineupController::class,'store'])->name('coupon_lineup.store');
-    // Route::get('/coupon_lineup/show/{coupon_lineup_id}', [CouponLineupController::class,'show'])->name('coupon_lineup.show');
-    // Route::get('/coupon_lineup/edit/{coupon_lineup_id}', [CouponLineupController::class,'edit'])->name('coupon_lineup.edit');
-    // Route::post('/coupon_lineup/update/{coupon_lineup_id}', [CouponLineupController::class,'update'])->name('coupon_lineup.update');
-    // Route::post('/coupon_lineup/destroy/{coupon_lineup_id}', [CouponLineupController::class,'destroy'])->name('coupon_lineup.destroy');
-
-
-    // User関連
     Route::get('users', [UserController::class, 'index'])->name('users.index'); // ユーザー一覧表示
     Route::post('users/store', [UserController::class, 'store'])->name('users.store'); // ユーザー作成
     Route::get('users/show/{user_id}', [UserController::class, 'show'])->name('users.show'); // ユーザー詳細表示
+    Route::get('users/edit/{user_id}', [UserController::class,'edit'])->name('users.edit');
     Route::post('users/update/{user_id}', [UserController::class, 'update'])->name('users.update'); // ユーザー更新
     Route::post('users/destroy/{user_id}', [UserController::class, 'destroy'])->name('users.destroy'); // ユーザー削除
 
@@ -58,14 +53,17 @@ Route::post('login', [AuthController::class, 'login']);
     // Route::put('venues/{id}', [VenueController::class, 'update'])->name('venues.update'); // 会場更新
     // Route::delete('venues/{id}', [VenueController::class, 'destroy'])->name('venues.destroy'); // 会場削除
 
+    // Venue関連
+    Route::get('/venue/index', [VenueController::class,'index'])->name('venue.index');
+    Route::get('/venue/create', [VenueController::class,'create'])->name('venue.create');
+    Route::post('/venue/store', [VenueController::class,'store'])->name('venue.store');
+    Route::get('/venue/show/{venue_id}', [VenueController::class,'show'])->name('venue.show');
+    Route::get('/venue/edit/{venue_id}', [VenueController::class,'edit'])->name('venue.edit');
+    Route::post('/venue/update/{venue_id}', [VenueController::class,'update'])->name('venue.update');
+    Route::post('/venue/destroy/{venue_id}', [VenueController::class,'destroy'])->name('venue.destroy');
+    // routes/web.php
+    Route::get('/venue/{id}', [VenueController::class, 'show'])->name('venue.show');
 
-    Route::get('/venues/index', [VenuesController::class,'index'])->name('venues.index');
-    Route::get('/venues_lineup/create', [VenuesController::class,'create'])->name('venues.create');
-    Route::post('/venues_lineup/store', [VenuesController::class,'store'])->name('venues.store');
-    Route::get('/venues_lineup/show/{coupon_lineup_id}', [VenuesController::class,'show'])->name('venues.show');
-    Route::get('/venues_lineup/edit/{coupon_lineup_id}', [VenuesController::class,'edit'])->name('venues.edit');
-    Route::post('/venues_lineup/update/{coupon_lineup_id}', [VenuesController::class,'update'])->name('venues.update');
-    Route::post('/venues_lineup/destroy/{coupon_lineup_id}', [VenuesController::class,'destroy'])->name('venues.destroy');
 
     // Event関連
     Route::get('events', [EventController::class, 'index'])->name('events.index'); // イベント一覧表示
@@ -81,8 +79,14 @@ Route::post('login', [AuthController::class, 'login']);
     Route::post('user-events', [UserHasEventController::class, 'store'])->name('user_events.store'); // イベント参加
     Route::put('user-events/{id}', [UserHasEventController::class, 'update'])->name('user_events.update'); // イベント参加状況の更新
     Route::delete('user-events/{id}', [UserHasEventController::class, 'destroy'])->name('user_events.destroy'); // イベント参加取消
-// });
+//});
 
-// Route::get('{any}', function () {
-//     return view('home');
-// })->where('any', '.*');
+
+    //以下は参考
+    // Route::get('/coupon_lineup/index', [CouponLineupController::class,'index'])->name('coupon_lineup.index');
+    // Route::get('/coupon_lineup/create', [CouponLineupController::class,'create'])->name('coupon_lineup.create');
+    // Route::post('/coupon_lineup/store', [CouponLineupController::class,'store'])->name('coupon_lineup.store');
+    // Route::get('/coupon_lineup/show/{coupon_lineup_id}', [CouponLineupController::class,'show'])->name('coupon_lineup.show');
+    // Route::get('/coupon_lineup/edit/{coupon_lineup_id}', [CouponLineupController::class,'edit'])->name('coupon_lineup.edit');
+    // Route::post('/coupon_lineup/update/{coupon_lineup_id}', [CouponLineupController::class,'update'])->name('coupon_lineup.update');
+    // Route::post('/coupon_lineup/destroy/{coupon_lineup_id}', [CouponLineupController::class,'destroy'])->name('coupon_lineup.destroy');
