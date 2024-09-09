@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->string('id', 191)->primary();
             $table->string('venue_id', 191);
             $table->string('name', 191);
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamp('updated_at', 3)->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes('deleted_at', 3);
 
-            $table->foreign('venue_id', 'event_venue_id_fkey')
+            $table->foreign('venue_id', 'events_venue_id_fkey')
                 ->references('id')
                 ->on('venues')
                 ->onDelete('RESTRICT')
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event');
+        Schema::dropIfExists('events');
     }
 };
