@@ -21,6 +21,10 @@ Route::get('/venue', function () {
     return view('pages.venue.index'); // 他のページ
 });
 
+//Route::get('/event', function () {
+//    return view('pages.event.index'); // 他のページ
+//});
+
 
 Route::get('/login', function () {
     return view('pages.auth.login');
@@ -34,7 +38,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('auth:sanctum')->group(function () {
+//Route::middleware('auth:sanctum')->group(function () {
     Route::get('users', [UserController::class, 'index'])->name('users.index'); // ユーザー一覧表示
     Route::post('users/store', [UserController::class, 'store'])->name('users.store'); // ユーザー作成
     Route::get('users/show/{user_id}', [UserController::class, 'show'])->name('users.show'); // ユーザー詳細表示
@@ -80,7 +84,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('user-events', [UserHasEventController::class, 'store'])->name('user_events.store'); // イベント参加
     Route::put('user-events/{id}', [UserHasEventController::class, 'update'])->name('user_events.update'); // イベント参加状況の更新
     Route::delete('user-events/{id}', [UserHasEventController::class, 'destroy'])->name('user_events.destroy'); // イベント参加取消
-});
+//});
 
 
     //以下は参考
