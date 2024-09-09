@@ -115,7 +115,6 @@ class AuthController extends Controller
             FacadesAuth::loginUsingId($user->id);
             return redirect('/')->with('flash.success', 'ログインに成功しました');
         }
-    
         return back()->withErrors(['login_error' => '認証に失敗しました']);
     }
     
