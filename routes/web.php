@@ -59,12 +59,20 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::post('/venues_lineup/destroy/{coupon_lineup_id}', [VenuesLineupController::class,'destroy'])->name('venues_lineup.destroy');
 
     // Event関連
-    Route::get('events', [EventController::class, 'index'])->name('events.index'); // イベント一覧表示
-    Route::get('events/{id}', [EventController::class, 'show'])->name('events.show'); // イベント詳細表示
-    Route::get('events/create', [EventController::class, 'create'])->name('events.create'); // イベント詳細新規作成
-    Route::post('events', [EventController::class, 'store'])->name('events.store'); // イベント作成
-    Route::put('events/{id}', [EventController::class, 'update'])->name('events.update'); // イベント更新
-    Route::delete('events/{id}', [EventController::class, 'destroy'])->name('events.destroy'); // イベント削除
+    Route::get('/event/index', [EventController::class,'index'])->name('event.index');
+    Route::get('/event/create', [EventController::class,'create'])->name('event.create');
+    Route::post('/event/store', [EventController::class,'store'])->name('event.store');
+    Route::get('/event/show/{event_id}', [EventController::class,'show'])->name('event.show');
+    Route::get('/event/edit/{event_id}', [EventController::class,'edit'])->name('event.edit');
+    Route::post('/event/update/{event_id}', [EventController::class,'update'])->name('event.update');
+    Route::post('/event/destroy/{event_id}', [EventController::class,'destroy'])->name('event.destroy');
+
+    //Route::get('events', [EventController::class, 'index'])->name('events.index'); // イベント一覧表示
+    //Route::get('events/{id}', [EventController::class, 'show'])->name('events.show'); // イベント詳細表示
+    //Route::get('events/create', [EventController::class, 'create'])->name('events.create'); // イベント詳細新規作成
+    //Route::post('events', [EventController::class, 'store'])->name('events.store'); // イベント作成
+    //Route::put('events/{id}', [EventController::class, 'update'])->name('events.update'); // イベント更新
+    //Route::delete('events/{id}', [EventController::class, 'destroy'])->name('events.destroy'); // イベント削除
 
     // UserHasEvent関連
     Route::get('user-events', [UserHasEventController::class, 'index'])->name('user_events.index'); // ユーザーのイベント一覧
