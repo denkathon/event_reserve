@@ -198,7 +198,6 @@ html, body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
     min-height: 100vh;
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
@@ -340,3 +339,45 @@ html, body {
     text-align: center;
     z-index: 99;
 }
+//space
+.schedule-page {
+    padding: 20px;
+    margin-top: 100px; /* 必要に応じて調整 */
+}
+
+.schedule {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.empty-btn {
+    background-color: #6c757d;
+}
+
+.event-btn {
+    background-color: #28a745;
+}
+

@@ -32,6 +32,15 @@ class Event extends Model
         'deleted_at',
     ];
 
+    public function userHasEvents()
+    {
+        return $this->hasMany(UserHasEvent::class);
+    }
+
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class);
+    }
 
     public function findAllEvent($request)
     {
@@ -57,18 +66,5 @@ class Event extends Model
     
         $events = $query->paginate(10);
         return $events;
-    }
-
-
-
-
-    public function userHasEvents()
-    {
-        return $this->hasMany(UserHasEvent::class);
-    }
-
-    public function venue()
-    {
-        return $this->belongsTo(Venue::class);
     }
 }
