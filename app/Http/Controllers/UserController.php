@@ -32,15 +32,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
-            'name' => $request->name,
-            'auth_id' => $auth_id,
-        ]);
+        // User::create([
+        //     'name' => $request->name,
+        //     'auth_id' => $auth_id,
+        // ]);
 
         $check_user_id = $this->user->checkAuthId($request);
         if ($check_user_id) {
             $registerUser = $this->user->insertUser($request);
-            return redirect()->route('user.index')->with('flash.success', '登録に成功しました。');
+            return redirect()->view('pages.user.index')->with('flash.success', '登録に成功しました。');
         } else {
             return redirect()->route('user.create')->with('flash.error', '登録に失敗しました。(shop_id)');
         }
