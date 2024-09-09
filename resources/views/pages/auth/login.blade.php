@@ -1,31 +1,25 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    @vite('resources/css/app.css')
-</head>
-
-<body>
-    <main>
-        <form method="POST" action="{{ route('login') }}">
+@section('content')
+    <div class="auth-container">
+        <h1 class="auth-heading">ログイン</h1>
+        <form method="POST" action="{{ route('login') }}" class="auth-form">
             @csrf
-            <label for="user_name">ユーザー名</label>
-            <input type="text" id="user_name" name="user_name" required>
-
-            <label for="password">パスワード</label>
-            <input type="password" id="password" name="password" required>
-
-            <button type="submit">ログイン</button>
+            <div class="auth-form-group">
+                <label for="user_name">ユーザー名</label>
+                <input type="text" id="user_name" name="user_name" required>
+            </div>
+            <div class="auth-form-group">
+                <label for="password">パスワード</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="auth-submit-button">ログイン</button>
         </form>
-        <a href="{{ route('register') }}">新規作成はこちら</a>
+
+        <a href="{{ route('register') }}" class="auth-link">新規作成はこちら</a>
 
         @include('components.flashMessage')
-    </main>
+    </div>
+@endsection
 
-</body>
-
-</html>
+@vite('resources/css/app.css')

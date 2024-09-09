@@ -195,6 +195,12 @@ h1 {
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
     font-family: Arial, sans-serif;
 }
 
@@ -234,6 +240,75 @@ html, body {
 .visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.auth-container {
+    background-color: #ffffff;
+    padding: 150px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    max-height: 600px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.auth-heading {
+    font-size: 32px; /* 増やしました */
+    margin-bottom: 25px; /* 増やしました */
+}
+
+.auth-form-group {
+    margin-bottom: 20px; /* 増やしました */
+    text-align: left;
+    width: 100%;
+}
+
+.auth-form-group label {
+    display: block;
+    font-size: 18px; /* 増やしました */
+    margin-bottom: 10px; /* 増やしました */
+}
+
+.auth-form-group input {
+    width: 100%;
+    padding: 15px; /* 増やしました */
+    font-size: 16px; /* 増やしました */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.auth-submit-button {
+    width: 100%;
+    padding: 15px; /* 増やしました */
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px; /* 増やしました */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-submit-button:hover {
+    background-color: #0056b3;
+}
+
+.auth-link {
+    display: inline-block;
+    margin-top: 15px; /* 増やしました */
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px; /* 増やしました */
+}
+
+.auth-link:hover {
+    text-decoration: underline;
 }
 
 .alert {

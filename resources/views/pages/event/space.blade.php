@@ -20,7 +20,7 @@ document.write(year+"年"+month+"月"+day+"日 "+week_ja[week]+"曜日");
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <link rel="stylesheet" href="/css/styles.css">
+    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
     <script>
         function navigateToCreatePage(startAt, endAt) {
             const url = `/event/create`;
