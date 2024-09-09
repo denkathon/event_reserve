@@ -7,7 +7,8 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function __construct(protected User $user)
+    protected $user;
+    public function __construct()
     {
         $this->user = new User();
     }
@@ -32,17 +33,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // User::create([
-        //     'name' => $request->name,
-        //     'auth_id' => $auth_id,
-        // ]);
-
-        $check_user_id = $this->user->checkAuthId($request);
-        if ($check_user_id) {
+        $check_auth_id = $request->check_auth_id;
+        if ($check_auth_id) {
             $registerUser = $this->user->insertUser($request);
-            return redirect()->view('pages.user.index')->with('flash.success', '登録に成功しました。');
+            return redirect()->view('pages.user.index')->with('success', '登録に成功しました。');
         } else {
-            return redirect()->route('user.create')->with('flash.error', '登録に失敗しました。(shop_id)');
+            return redirect()->view('pages.top.index')->with('error', '登録に失敗しました。');
         }
     }
 

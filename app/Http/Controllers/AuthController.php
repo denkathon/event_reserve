@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class AuthController extends Controller
 {
+    protected $auth, $user;
+    public function __construct()
+    {
+        $this->auth = new Auth();
+        $this->user = new User();
+    }
     /**
      * Display a listing of the resource.
      */
@@ -74,20 +81,29 @@ class AuthController extends Controller
             'name' => 'required',
         ]);
 
-        // Authsテーブルに登録
-        $auth = Auth::create([
-            'user_name' => $request->user_name,
-            'password' => Hash::make($request->password),
-        ]);
-
-        $auth_id = $auth->id;
-
-        
-
-
-
-        return redirect('/login')->with('success', 'アカウントが作成されました');
+        DB::beginTransaction();
+    
+        try {
+            $auth_id = $this->auth->insertAuth($request);
+    
+            // デバッグ用の出力
+            \Log::info('Auth ID:', ['auth_id' => $auth_id]);
+    
+            if ($auth_id) {
+                $registerUser = $this->user->insertUser($request, $auth_id);
+                DB::commit();
+                return redirect('/venue')->with('flash.success', '登録に成功しました。');
+            } else {
+                DB::rollBack();
+                return redirect('/login')->with('flash.error', '登録に失敗しました。');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Registration failed:', ['error' => $e->getMessage()]);
+            return redirect('/login')->with('flash.error', '登録に失敗しました。');
+        }
     }
+    
 
     public function login(Request $request)
     {
@@ -96,12 +112,12 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
     
-        $auth = \DB::table('auths')->where('user_name', $request->user_name)->first();
+        $auth = DB::table('auths')->where('user_name', $request->user_name)->first();
     
         if ($auth && Hash::check($request->password, $auth->password)) {
-            $user = \DB::table('users')->where('auth_id', $auth->id)->first();
+            $user = DB::table('users')->where('auth_id', $auth->id)->first();
             FacadesAuth::loginUsingId($user->id);
-            return redirect('/')->with('success', 'ログインに成功しました');
+            return redirect('/')->with('flash.success', 'ログインに成功しました');
         }
     
         return back()->withErrors(['login_error' => '認証に失敗しました']);

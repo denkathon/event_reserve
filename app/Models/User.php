@@ -40,4 +40,16 @@ class User extends Model
     {
         return $this->hasMany(UserHasEvent::class);
     }
+
+    public function insertUser($request, string $auth_id)
+    {
+        // デバッグ用の出力
+        \Log::info('Inserting User:', ['request' => $request->all(), 'auth_id' => $auth_id]);
+    
+        return $this->create([
+            'name' => $request->name,
+            'auth_id' => $auth_id,
+        ]);
+    }
+    
 }

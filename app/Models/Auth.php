@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Hash;
 
 class Auth extends Model
 {
@@ -32,5 +33,18 @@ class Auth extends Model
     public function user()
     {
         return $this->hasOne(User::class);
+    }
+
+    public function insertAuth($request)
+    {
+        $auth = $this->create([
+            'user_name' => $request->user_name,
+            'password' => Hash::make($request->password),
+        ]);
+    
+        // デバッグ用の出力
+        \Log::info('Created Auth:', ['auth' => $auth]);
+    
+        return $auth->id;
     }
 }

@@ -1,4 +1,7 @@
-/* 共通のヘッダーとナビゲーションのスタイル */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 header {
     background-color: #fff;
     padding: clamp(5px, 1vw, 10px) 0;
@@ -181,4 +184,35 @@ h1 {
     .venue-details {
         margin-top: 10px;
     }
+}
+
+
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+.alert-success {
+    position: fixed;
+    top: 9%;
+    width: 100%;
+    color: #1d643b;
+    background-color: #d7f3e3;
+    border-color: #c7eed8;
+    transform: translateY(-50%);
+    text-align: center;
+    z-index: 99;
+}
+.alert-error {
+    position: fixed;
+    top: 9%;
+    width: 100%;
+    color: #fff;
+    background-color: #f00;
+    border-color: #f00;
+    transform: translateY(-50%);
+    text-align: center;
+    z-index: 99;
 }
