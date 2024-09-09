@@ -106,10 +106,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
     
-        $auth = \DB::table('auths')->where('user_name', $request->user_name)->first();
+        $auth = DB::table('auths')->where('user_name', $request->user_name)->first();
     
         if ($auth && Hash::check($request->password, $auth->password)) {
-            $user = \DB::table('users')->where('auth_id', $auth->id)->first();
+            $user = DB::table('users')->where('auth_id', $auth->id)->first();
             FacadesAuth::loginUsingId($user->id);
             return redirect('/')->with('flash.success', 'ログインに成功しました');
         }
