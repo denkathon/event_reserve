@@ -30,33 +30,6 @@ class Venue extends Model
         'deleted_at',
     ];
 
-    public function findAllVenue($request)
-    {
-        $query = Venue::query();
-
-        if ($request->filled('search_id')) {
-            $query->where('id', $request->input('search_id'));
-        }
-        if ($request->filled('search_name')) {
-            $query->where('name', 'like', '%' . $request->input('search_name') . '%');
-        }
-        if ($request->filled('search_start_at')) {
-            $start_at = Carbon::parse($request->input('search_start_at'))->subHours(9) ?? null;
-            $query->where('start_at', '>=', $start_at);
-        }
-        if ($request->filled('search_end_at')) {
-            $end_at = Carbon::parse($request->input('search_end_at'))->subHours(9) ?? null;
-            $query->where('end_at', '<=', $end_at);
-        }
-    
-        $venues = $query->paginate(10);
-        // $couponLineups = $this->adjustCouponLineupsTimezone($couponLineups);
-        return $venues;
-    }
-
-    
-
-
     public function events()
     {
         return $this->hasMany(Event::class);
