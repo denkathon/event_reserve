@@ -14,8 +14,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // 認証関係
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/test', function () {
+    return response()->json(['message' => 'POST request successful']);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     // Auth

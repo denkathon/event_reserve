@@ -9,7 +9,6 @@ const RegisterPage: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [hasStamp, setHasStamp] = useState<number | undefined>(undefined);
     const navigate = useNavigate();
     const toast = useToast(); // トースト通知
 

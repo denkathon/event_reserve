@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
             password: loginInput.password,
         };
         axios.get('/sanctum/csrf-cookie').then((response) => {
-            axios.post(`api/login`, data).then((res) => {
+            axios.post('api/login', data).then((res) => {
                 if (res.data.status === 200) {
                     localStorage.setItem('auth_token', res.data.token);
                     localStorage.setItem('auth_name', res.data.username);
@@ -117,6 +117,16 @@ const LoginPage: React.FC = () => {
                         新規登録ページへ
                     </button>
                 </div>
+                
+                <div>
+                    <h2>ユーザーリスト</h2>
+                    <div>
+                        {Array.isArray(users) && users.map(user => (
+                            <li key={user.id}>{user.name} ({user.email})</li>
+                        ))}
+                    </div>
+                </div>
+
             </form>
         </div>
     );
