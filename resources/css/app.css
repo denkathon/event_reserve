@@ -1,0 +1,49 @@
+/* resources/css/app.css */
+header {
+    background-color: #fff;
+    padding: clamp(5px, 1vw, 10px) 0;
+    color: #000;
+    border-bottom: 2px solid #000;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 clamp(5px, 2vw, 20px);
+    overflow: hidden;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: clamp(10px, 2vw, 20px);
+    justify-content: flex-end;
+    white-space: nowrap;
+    flex-wrap: wrap; /* 項目が画面に収まらない場合は折り返す */
+    max-width: 100%; /* リストが画面の幅を超えないように設定 */
+}
+
+nav ul li {
+    flex-shrink: 1; /* リスト項目が縮小されるように設定 */
+}
+
+nav ul li a {
+    color: #000;
+    text-decoration: none;
+    font-size: clamp(14px, 2vw, 24px); /* フォントサイズを適切に調整 */
+}
+
+h1 {
+    font-family: 'Dancing Script, sans-serif';
+    font-size: clamp(28px, 5vw, 56px);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
