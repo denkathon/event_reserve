@@ -125,7 +125,7 @@
         <input type="text" placeholder="入力">
         <button>検索</button>
         <ul>
-            @foreach($event as $event)
+            @foreach($events as $event)
             <li data-name="{{ $event->name }}" data-information="{{ $event->information }}" data-details="{{ $event->details }}" data-start_at="{{ $event->search_start_at }}" data-date="{{ $event->date }}">
                 <div class="circle"></div>
                 <div class="event-info">{{ $event->name }} - {{ $event->information }}, {{ $event->search_start_at }}, {{ $event->search_date }}</div>

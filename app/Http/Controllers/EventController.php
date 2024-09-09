@@ -57,16 +57,26 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
+    // app/Http/Controllers/EventController.php
     public function show(Request $request, string $event_id)
     {
+        // イベントの取得
         $event = Event::findOrFail($event_id);
-        if($event){
-            $venue = Venue::findOrFail($event->venue_id);
-            $user = $event->userHasEvents()->
-        }else{
-
-        }
-        return view('events.show', compact('event'));
+        
+        // イベントの会場の取得
+        $venue = $event->venue;
+        
+        // イベントに関連するユーザーの取得
+        $userDetails = $event->userHasEvents->map(function($userHasEvent) {
+            return $userHasEvent->user;
+        })->map(function($user) {
+            return [
+                'name' => $user->name,
+                'e_mail' => $user->e_mail,
+                'phone_number' => $user->phone_number,
+            ];
+        });
+        return view('pages.event.show', compact('event', 'venue', 'userDetails'));
     }
 
     /**
