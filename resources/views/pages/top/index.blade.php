@@ -3,5 +3,5 @@
 
 @section('content')
     <h1>トップページ</h1>
-    <p>トップページの内容です。</p>
+    <p>トップページの内容ですね。</p>
 @endsection
