@@ -28,7 +28,7 @@ class VenueController extends Controller
     {
         // venuesテーブルからすべてのデータを取得
         $venues = Venue::all(); // $idは必要ありません
-        return view('pages.venue.index', ['venues' => $venues]);
+        return view('pages.venue.index', compact('venues'));
     }
 
 
@@ -55,7 +55,7 @@ class VenueController extends Controller
     public function show(string $id)
     {
         $venue = Venue::findOrFail($id); 
-        return view('pages.venue.show', ['venue' => $venue]);
+        return view('pages.venue.show', ['venue_id' => $venue->id]);
     }
 
     /**

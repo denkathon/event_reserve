@@ -49,7 +49,7 @@ class Venue extends Model
             $query->where('end_at', '<=', $end_at);
         }
     
-        $venue = $query->paginate(10);
+        $venues = $query->paginate(10);
         // $couponLineups = $this->adjustCouponLineupsTimezone($couponLineups);
         return $venues;
     }

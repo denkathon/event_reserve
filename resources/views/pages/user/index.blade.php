@@ -25,6 +25,11 @@
                 <a class="nav-link" href="#" onclick="showContent('F')">管理者</a>
             </li>
         </ul>
+        <!-- Logout Button -->
+        <form action="{{ route('logout') }}" method="POST" style="margin-top: 20px;">
+            @csrf
+            <button type="submit" class="btn btn-danger">ログアウト</button>
+        </form>
     </div>
 
     <!-- Content Area -->
@@ -83,6 +88,22 @@
 
     #menu .nav-item {
         list-style-type: none;
+    }
+
+    /* Logout button style */
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
     }
 
     /* Responsive design */
