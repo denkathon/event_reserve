@@ -7,32 +7,23 @@ use App\Http\Controllers\VenueController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserHasEventController;
 
-// 認証関係
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+Route::get('/login', function () {
+    return view('pages.auth.login');
+})->name('login')->middleware('guest');
 
-// 認証が必要なルート
+Route::get('/register', function () {
+    return view('pages.auth.register');
+})->name('register')->middleware('guest');
+
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::middleware('auth:sanctum')->group(function () {
-
-    // Auth関連
-    Route::get('me', [AuthController::class, 'me'])->name('auth.me'); // ログイン中のユーザー情報
-    Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout'); // ログアウト
-
-
-    //以下は参考
-    // Route::get('/coupon_lineup/index', [CouponLineupController::class,'index'])->name('coupon_lineup.index');
-    // Route::get('/coupon_lineup/create', [CouponLineupController::class,'create'])->name('coupon_lineup.create');
-    // Route::post('/coupon_lineup/store', [CouponLineupController::class,'store'])->name('coupon_lineup.store');
-    // Route::get('/coupon_lineup/show/{coupon_lineup_id}', [CouponLineupController::class,'show'])->name('coupon_lineup.show');
-    // Route::get('/coupon_lineup/edit/{coupon_lineup_id}', [CouponLineupController::class,'edit'])->name('coupon_lineup.edit');
-    // Route::post('/coupon_lineup/update/{coupon_lineup_id}', [CouponLineupController::class,'update'])->name('coupon_lineup.update');
-    // Route::post('/coupon_lineup/destroy/{coupon_lineup_id}', [CouponLineupController::class,'destroy'])->name('coupon_lineup.destroy');
-
-
-    // User関連
     Route::get('users', [UserController::class, 'index'])->name('users.index'); // ユーザー一覧表示
     Route::post('users/store', [UserController::class, 'store'])->name('users.store'); // ユーザー作成
     Route::get('users/show/{user_id}', [UserController::class, 'show'])->name('users.show'); // ユーザー詳細表示
+    Route::get('users/edit/{user_id}', [UserController::class,'edit'])->name('users.edit');
     Route::post('users/update/{user_id}', [UserController::class, 'update'])->name('users.update'); // ユーザー更新
     Route::post('users/destroy/{user_id}', [UserController::class, 'destroy'])->name('users.destroy'); // ユーザー削除
 
@@ -59,6 +50,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('user-events/{id}', [UserHasEventController::class, 'destroy'])->name('user_events.destroy'); // イベント参加取消
 });
 
-// Route::get('{any}', function () {
-//     return view('home');
-// })->where('any', '.*');
+
+    //以下は参考
+    // Route::get('/coupon_lineup/index', [CouponLineupController::class,'index'])->name('coupon_lineup.index');
+    // Route::get('/coupon_lineup/create', [CouponLineupController::class,'create'])->name('coupon_lineup.create');
+    // Route::post('/coupon_lineup/store', [CouponLineupController::class,'store'])->name('coupon_lineup.store');
+    // Route::get('/coupon_lineup/show/{coupon_lineup_id}', [CouponLineupController::class,'show'])->name('coupon_lineup.show');
+    // Route::get('/coupon_lineup/edit/{coupon_lineup_id}', [CouponLineupController::class,'edit'])->name('coupon_lineup.edit');
+    // Route::post('/coupon_lineup/update/{coupon_lineup_id}', [CouponLineupController::class,'update'])->name('coupon_lineup.update');
+    // Route::post('/coupon_lineup/destroy/{coupon_lineup_id}', [CouponLineupController::class,'destroy'])->name('coupon_lineup.destroy');
