@@ -18,12 +18,23 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('me', [AuthController::class, 'me'])->name('auth.me'); // ログイン中のユーザー情報
     Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout'); // ログアウト
 
+
+    //以下は参考
+    // Route::get('/coupon_lineup/index', [CouponLineupController::class,'index'])->name('coupon_lineup.index');
+    // Route::get('/coupon_lineup/create', [CouponLineupController::class,'create'])->name('coupon_lineup.create');
+    // Route::post('/coupon_lineup/store', [CouponLineupController::class,'store'])->name('coupon_lineup.store');
+    // Route::get('/coupon_lineup/show/{coupon_lineup_id}', [CouponLineupController::class,'show'])->name('coupon_lineup.show');
+    // Route::get('/coupon_lineup/edit/{coupon_lineup_id}', [CouponLineupController::class,'edit'])->name('coupon_lineup.edit');
+    // Route::post('/coupon_lineup/update/{coupon_lineup_id}', [CouponLineupController::class,'update'])->name('coupon_lineup.update');
+    // Route::post('/coupon_lineup/destroy/{coupon_lineup_id}', [CouponLineupController::class,'destroy'])->name('coupon_lineup.destroy');
+
+
     // User関連
     Route::get('users', [UserController::class, 'index'])->name('users.index'); // ユーザー一覧表示
-    Route::get('users/{id}', [UserController::class, 'show'])->name('users.show'); // ユーザー詳細表示
-    Route::post('users', [UserController::class, 'store'])->name('users.store'); // ユーザー作成
-    Route::put('users/{id}', [UserController::class, 'update'])->name('users.update'); // ユーザー更新
-    Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy'); // ユーザー削除
+    Route::post('users/store', [UserController::class, 'store'])->name('users.store'); // ユーザー作成
+    Route::get('users/show/{user_id}', [UserController::class, 'show'])->name('users.show'); // ユーザー詳細表示
+    Route::post('users/update/{user_id}', [UserController::class, 'update'])->name('users.update'); // ユーザー更新
+    Route::post('users/destroy/{user_id}', [UserController::class, 'destroy'])->name('users.destroy'); // ユーザー削除
 
     // Venue関連
     Route::get('venues', [VenueController::class, 'index'])->name('venues.index'); // 会場一覧表示
