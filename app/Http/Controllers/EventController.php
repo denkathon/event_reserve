@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
+use App\Models\Venue;
+
 
 class EventController extends Controller
 {
@@ -11,6 +14,7 @@ class EventController extends Controller
      */
     public function index()
     {
+      
         //
     }
 
@@ -19,6 +23,7 @@ class EventController extends Controller
      */
     public function create()
     {
+        return view('pages.event.create');
         //
     }
 
@@ -27,14 +32,25 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $event = new Event();
+        $event->name = $request->name;
+        $event->venue_id = $request->input('venue_id');
+        $event->information = $request->information;
+        $event->venue_id = $request->venue_id;
+        $event->start_at = $request->start_at;
+        $event->end_at = $request->end_at;
+        $event->save();
+
+        return redirect()->route('pages.event.show', $event->id);
         //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
+          $venue_id = $request->route('venue_id');
         //
     }
 
@@ -61,4 +77,13 @@ class EventController extends Controller
     {
         //
     }
+
+    public function space(Request $request, /*string $id*/)
+    {
+        //$venue_id = $request->route('venue_id');
+        $events = Event::all();
+        return view('pages.event.space', compact('events'));
+        //
+    }
+
 }
