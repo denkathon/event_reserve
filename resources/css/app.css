@@ -198,7 +198,6 @@ html, body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
     min-height: 100vh;
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
@@ -339,4 +338,119 @@ html, body {
     transform: translateY(-50%);
     text-align: center;
     z-index: 99;
+}
+//space
+.schedule-page {
+    padding: 20px;
+    margin-top: 100px; /* 必要に応じて調整 */
+}
+
+.schedule {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.empty-btn {
+    background-color: #6c757d;
+}
+
+.event-btn {
+    background-color: #28a745;
+}
+
+//event
+.event-detail-page {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* イベント詳細コンテナ */
+.event-detail {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* イベント名 */
+.event-detail h2 {
+    font-size: 2.5rem; /* 40px */
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* イベント情報のラベル */
+.event-detail p {
+    font-size: 1.25rem; /* 20px */
+    color: #555;
+    margin: 10px 0;
+}
+
+/* 参加ユーザーセクション */
+.event-detail h3 {
+    font-size: 1.5rem; /* 24px */
+    color: #444;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* ユーザー情報リスト */
+.event-detail ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.event-detail li {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* ユーザー情報のラベル */
+.event-detail li p {
+    font-size: 1rem; /* 16px */
+    color: #666;
+}
+
+/* 戻るボタン */
+.event-detail a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.125rem; /* 18px */
+    color: #fff;
+    background-color: #4a5568;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.event-detail a:hover {
+    background-color: #2d3748;
 }

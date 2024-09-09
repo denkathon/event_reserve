@@ -20,7 +20,6 @@
     </div>
 
     <script>
-        // ページがロードされたときにアニメーションを適用
         window.onload = function() {
             const heading = document.querySelector('.toppage-heading');
             const paragraph = document.querySelector('.toppage-paragraph');

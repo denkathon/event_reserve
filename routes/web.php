@@ -7,7 +7,6 @@ use App\Http\Controllers\VenueController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserHasEventController;
 
-
 Route::get('/login', function () {
     return view('pages.auth.login');
 })->name('login')->middleware('guest');
@@ -43,8 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/venue/destroy/{venue_id}', [VenueController::class,'destroy'])->name('venue.destroy');
 
     // Event関連
-    Route::get('/event/index', [EventController::class,'index'])->name('event.index');
-    Route::get('event/space', [EventController::class, 'space'])->name('event.space');
+    Route::get('/event', [EventController::class,'index'])->name('event.index');
+    Route::get('/event/space', [EventController::class, 'space'])->name('event.space');
     Route::get('/event/create', [EventController::class,'create'])->name('event.create');
     Route::post('/event/store', [EventController::class,'store'])->name('event.store');
     Route::get('/event/show/{event_id}', [EventController::class,'show'])->name('event.show');
@@ -59,7 +58,6 @@ Route::middleware('auth')->group(function () {
     Route::put('user_event/update/{user_event_id}', [UserHasEventController::class, 'update'])->name('user_event.update'); // イベント参加状況の更新
     Route::delete('user_event/destroy/{user_event_id}', [UserHasEventController::class, 'destroy'])->name('user_event.destroy'); // イベント参加取消
 });
-
 
     //以下は参考
     // Route::get('/coupon_lineup/index', [CouponLineupController::class,'index'])->name('coupon_lineup.index');

@@ -19,8 +19,8 @@ class EventController extends Controller
     }
     public function index(Request $request)
     {
-        $event = $this->event->findAllEvent($request);
-        return view('pages.event.index', compact('event'));
+        $events = Event::all();
+        return view('pages.event.index', compact('events'));
         //
     }
 
@@ -57,10 +57,26 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    // app/Http/Controllers/EventController.php
+    public function show(Request $request, string $event_id)
     {
-          $venue_id = $request->route('venue_id');
-        //
+        // イベントの取得
+        $event = Event::findOrFail($event_id);
+        
+        // イベントの会場の取得
+        $venue = $event->venue;
+        
+        // イベントに関連するユーザーの取得
+        $userDetails = $event->userHasEvents->map(function($userHasEvent) {
+            return $userHasEvent->user;
+        })->map(function($user) {
+            return [
+                'name' => $user->name,
+                'e_mail' => $user->e_mail,
+                'phone_number' => $user->phone_number,
+            ];
+        });
+        return view('pages.event.show', compact('event', 'venue', 'userDetails'));
     }
 
     /**
