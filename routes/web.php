@@ -21,7 +21,6 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
-    //table plus
     Route::get('/venue', [VenueController::class, 'index']);
     Route::get('/', function () {
         return view('pages.top.index');
@@ -42,12 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/venue/edit/{venue_id}', [VenueController::class,'edit'])->name('venue.edit');
     Route::post('/venue/update/{venue_id}', [VenueController::class,'update'])->name('venue.update');
     Route::post('/venue/destroy/{venue_id}', [VenueController::class,'destroy'])->name('venue.destroy');
-    // routes/web.php
-    Route::get('/venue/{id}', [VenueController::class, 'show'])->name('venue.show');
-
 
     // Event関連
     Route::get('/event/index', [EventController::class,'index'])->name('event.index');
+    Route::get('event/space', [EventController::class, 'space'])->name('event.space');
     Route::get('/event/create', [EventController::class,'create'])->name('event.create');
     Route::post('/event/store', [EventController::class,'store'])->name('event.store');
     Route::get('/event/show/{event_id}', [EventController::class,'show'])->name('event.show');
@@ -56,11 +53,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/event/destroy/{event_id}', [EventController::class,'destroy'])->name('event.destroy');
 
     // UserHasEvent関連
-    Route::get('user-events', [UserHasEventController::class, 'index'])->name('user_events.index'); // ユーザーのイベント一覧
-    Route::get('user-events/{id}', [UserHasEventController::class, 'show'])->name('user_events.show'); // イベントの詳細
-    Route::post('user-events', [UserHasEventController::class, 'store'])->name('user_events.store'); // イベント参加
-    Route::put('user-events/{id}', [UserHasEventController::class, 'update'])->name('user_events.update'); // イベント参加状況の更新
-    Route::delete('user-events/{id}', [UserHasEventController::class, 'destroy'])->name('user_events.destroy'); // イベント参加取消
+    Route::get('user_event/index', [UserHasEventController::class, 'index'])->name('user_event.index'); // ユーザーのイベント一覧
+    Route::get('user_event/show/{user_event_id}', [UserHasEventController::class, 'show'])->name('user_event.show'); // イベントの詳細
+    Route::post('user_event/store', [UserHasEventController::class, 'store'])->name('user_event.store'); // イベント参加
+    Route::put('user_event/update/{user_event_id}', [UserHasEventController::class, 'update'])->name('user_event.update'); // イベント参加状況の更新
+    Route::delete('user_event/destroy/{user_event_id}', [UserHasEventController::class, 'destroy'])->name('user_event.destroy'); // イベント参加取消
 });
 
 
