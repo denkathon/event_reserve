@@ -3,16 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Venue;
+
 
 class VenueController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    //なんやこれ
+    protected $venues;
+    public function __construct()
+    {
+        $this->venues = new Venue();
+    }
+
+    // public function index(Request $request)
+    // {
+    //     $venues = $this->venue->findAllVenue($request);
+    //     return view('pages.venue.index', compact('venue'));
+    // }
+
     public function index()
     {
-        //
+        // venuesテーブルからすべてのデータを取得
+        $venues = Venue::all(); // $idは必要ありません
+        return view('pages.venue.index', ['venues' => $venues]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +54,8 @@ class VenueController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $venue = Venue::findOrFail($id); 
+        return view('pages.venue.show', ['venue' => $venue]);
     }
 
     /**

@@ -12,9 +12,15 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    protected $event;
+    public function __construct()
     {
-      
+        $this->event = new Event();
+    }
+    public function index(Request $request)
+    {
+        $event = $this->event->findAllEvent($request);
+        return view('pages.event.index', compact('event'));
         //
     }
 
