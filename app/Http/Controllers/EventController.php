@@ -21,9 +21,12 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('pages.event.create');
+         // クエリパラメータで start_time と end_time を受け取る
+         $startAt = $request->query('start_at');
+         $endAt = $request->query('end_at');
+         return view('pages.event.create', compact('startAt', 'endAt'));
         //
     }
 

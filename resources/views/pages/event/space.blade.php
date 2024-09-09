@@ -16,11 +16,20 @@ var week_ja= new Array("日","月","火","水","木","金","土");
 document.write(year+"年"+month+"月"+day+"日 "+week_ja[week]+"曜日");
 </script>
 
-<!-- resources/views/pages/event/space.blade.php -->
+<!-- resources/views/events/space.blade.php -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <link rel="stylesheet" href="/app/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script>
+        function navigateToCreatePage(startAt, endAt) {
+            const url = `/event/create`;
+            // パラメータを localStorage に保存
+            localStorage.setItem('start_at', startAt);
+            localStorage.setItem('end_at', endAt);
+            window.location.href = url;
+        }
+    </script>
 </head>
 <body>
     <h1>予約スケジュール</h1>
@@ -29,7 +38,6 @@ document.write(year+"年"+month+"月"+day+"日 "+week_ja[week]+"曜日");
             <thead>
                 <tr>
                     <th>時間</th>
-                    <!-- 日付を表示 -->
                     @for($i = 0; $i < 7; $i++)
                         <th>{{ now()->addDays($i)->format('Y-m-d') }}</th>
                     @endfor
@@ -41,11 +49,15 @@ document.write(year+"年"+month+"月"+day+"日 "+week_ja[week]+"曜日");
                         <td>{{ $hour }}:00</td>
                         @for($i = 0; $i < 7; $i++)
                             <td>
-                                <!-- 予約データに基づいてセルを表示 -->
-                                @if($events->where('start_at', now()->addDays($i)->format('Y-m-d H:i'))->count())
-                                    <a href="#modal">{{ $events->where('start_at', now()->addDays($i)->format('Y-m-d H:i'))->first()->name }}</a>
+                                @php
+                                    $currentDate = now()->addDays($i)->format('Y-m-d');
+                                    $startAt = "{$currentDate} {$hour}:00:00";
+                                    $endAt = "{$currentDate} " . ($hour + 1) . ":00:00";
+                                @endphp
+                                @if($events->where('start_at', $startAt)->count())
+                                    <a href="#modal">{{ $events->where('start_at', $startAt)->first()->name }}</a>
                                 @else
-                                    <a href="pages/event/create">0</a>
+                                <a href="javascript:void(0);" onclick="navigateToCreatePage('{{ $start_At }}', '{{ $endAt}}')">0</a>
                                 @endif
                             </td>
                         @endfor
