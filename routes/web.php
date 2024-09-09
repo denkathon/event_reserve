@@ -27,10 +27,6 @@ Route::middleware('auth')->group(function () {
         return view('pages.top.index');
     });
 
-    // Route::get('/venue', function () {
-    //     return view('pages.venue.index'); // 他のページ
-    // });
-
     Route::get('users', [UserController::class, 'index'])->name('users.index'); // ユーザー一覧表示
     Route::post('users/store', [UserController::class, 'store'])->name('users.store'); // ユーザー作成
     Route::get('users/show/{user_id}', [UserController::class, 'show'])->name('users.show'); // ユーザー詳細表示
@@ -39,14 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::post('users/destroy/{user_id}', [UserController::class, 'destroy'])->name('users.destroy'); // ユーザー削除
 
     // Venue関連
-    // Route::get('venues', [VenueController::class, 'index'])->name('venues.index'); // 会場一覧表示
-    // Route::get('venues/{id}', [VenueController::class, 'show'])->name('venues.show'); // 会場詳細表示
-    // Route::post('venues', [VenueController::class, 'store'])->name('venues.store'); // 会場作成
-    // Route::put('venues/{id}', [VenueController::class, 'update'])->name('venues.update'); // 会場更新
-    // Route::delete('venues/{id}', [VenueController::class, 'destroy'])->name('venues.destroy'); // 会場削除
-
-    // Venue関連
-    Route::get('/venue/index', [VenueController::class,'index'])->name('venue.index');
+    // Route::get('/venue/index', [VenueController::class,'index'])->name('venue.index');
     Route::get('/venue/create', [VenueController::class,'create'])->name('venue.create');
     Route::post('/venue/store', [VenueController::class,'store'])->name('venue.store');
     Route::get('/venue/show/{venue_id}', [VenueController::class,'show'])->name('venue.show');
@@ -65,13 +54,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/event/edit/{event_id}', [EventController::class,'edit'])->name('event.edit');
     Route::post('/event/update/{event_id}', [EventController::class,'update'])->name('event.update');
     Route::post('/event/destroy/{event_id}', [EventController::class,'destroy'])->name('event.destroy');
-
-    //Route::get('events', [EventController::class, 'index'])->name('events.index'); // イベント一覧表示
-    //Route::get('events/{id}', [EventController::class, 'show'])->name('events.show'); // イベント詳細表示
-    //Route::get('events/create', [EventController::class, 'create'])->name('events.create'); // イベント詳細新規作成
-    //Route::post('events', [EventController::class, 'store'])->name('events.store'); // イベント作成
-    //Route::put('events/{id}', [EventController::class, 'update'])->name('events.update'); // イベント更新
-    //Route::delete('events/{id}', [EventController::class, 'destroy'])->name('events.destroy'); // イベント削除
 
     // UserHasEvent関連
     Route::get('user-events', [UserHasEventController::class, 'index'])->name('user_events.index'); // ユーザーのイベント一覧
