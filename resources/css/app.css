@@ -1,4 +1,7 @@
-/* resources/css/app.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 header {
     background-color: #fff;
     padding: clamp(5px, 1vw, 10px) 0;
@@ -28,22 +31,237 @@ nav ul {
     gap: clamp(10px, 2vw, 20px);
     justify-content: flex-end;
     white-space: nowrap;
-    flex-wrap: wrap; /* 項目が画面に収まらない場合は折り返す */
-    max-width: 100%; /* リストが画面の幅を超えないように設定 */
+    flex-wrap: wrap;
+    max-width: 100%;
 }
 
 nav ul li {
-    flex-shrink: 1; /* リスト項目が縮小されるように設定 */
+    flex-shrink: 1;
 }
 
 nav ul li a {
     color: #000;
     text-decoration: none;
-    font-size: clamp(14px, 2vw, 24px); /* フォントサイズを適切に調整 */
+    font-size: clamp(14px, 2vw, 24px);
+    transition: color 0.3s ease; /* ホバー時の色変更をスムーズに */
 }
 
+nav ul li a:hover {
+    color: #007bff; /* ホバー時の色をブルーに変更 */
+}
+
+/* ページヘッダー用のスタイル */
 h1 {
     font-family: 'Dancing Script, sans-serif';
     font-size: clamp(28px, 5vw, 56px);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 80px; /* 固定ヘッダーの下に余白を追加 */
+}
+
+/* トップページのアニメーション付きスタイル */
+/* resources/css/app.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    padding: clamp(20px, 5vw, 50px);
+}
+
+.heading {
+    font-size: clamp(28px, 5vw, 72px);
+    font-weight: bold;
+    color: #333;
+    margin-bottom: clamp(10px, 2vw, 20px);
+}
+
+.paragraph {
+    font-size: clamp(16px, 2.5vw, 36px);
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+/* Container and title styling */
+.venue-container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.venue-title {
+    margin-top: 40px; /* 他のページには影響なし */
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+.venue-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px; /* リストの上部余白も少し調整 */
+}
+
+/* .venue-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+
+.venue-item {
+    margin-bottom: 10px;
+    list-style: none; /* リストマーカーを削除 */
+}
+
+
+.highlight {
+    background-color: #fce6b2; /* 特定のアイテムの背景色を変更 */
+}
+
+.circle-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 20px;
+}
+
+.highlight-circle {
+    background-color: #000; /* 特定のアイテムのアイコンを黒に変更 */
+}
+
+.venue-details {
+    flex-grow: 1;
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+/* リンクのデフォルトスタイルをリセット */
+.venue-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none; /* リンクの下線を削除 */
+    color: inherit; /* テキストの色を継承 */
+    width: 100%; /* リンクがリスト全体を覆うように */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.venue-link:hover {
+    background-color: #e0e0e0; /* ホバー時の背景色 */
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .venue-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .venue-details {
+        margin-top: 10px;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.toppage-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f9f9f9;
+    padding: clamp(20px, 5vw, 50px);
+}
+
+.toppage-heading {
+    font-size: clamp(28px, 5vw, 72px);
+    font-weight: bold;
+    color: #333;
+    margin-bottom: clamp(10px, 2vw, 20px);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.8s ease-out, transform 1.8s ease-out;
+}
+
+.toppage-paragraph {
+    font-size: clamp(16px, 2.5vw, 36px);
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
+    text-align: center;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.8s ease-out, transform 1.8s ease-out;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+.alert-success {
+    position: fixed;
+    top: 9%;
+    width: 100%;
+    color: #1d643b;
+    background-color: #d7f3e3;
+    border-color: #c7eed8;
+    transform: translateY(-50%);
+    text-align: center;
+    z-index: 99;
+}
+.alert-error {
+    position: fixed;
+    top: 9%;
+    width: 100%;
+    color: #fff;
+    background-color: #f00;
+    border-color: #f00;
+    transform: translateY(-50%);
+    text-align: center;
+    z-index: 99;
 }
