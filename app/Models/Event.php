@@ -32,6 +32,36 @@ class Event extends Model
         'deleted_at',
     ];
 
+
+    public function findAllEvent($request)
+    {
+        $query = Event::query();
+
+        if ($request->filled('search_id')) {
+            $query->where('id', $request->input('search_id'));
+        }
+        if ($request->filled('search_name')) {
+            $query->where('name', 'like', '%' . $request->input('search_name') . '%');
+        }
+        if ($request->filled('search_information')) {
+            $query->where('information', 'like', '%' . $request->input('search_information') . '%');
+        }
+        if ($request->filled('search_start_at')) {
+            $start_at = Carbon::parse($request->input('search_start_at'))->subHours(9) ?? null;
+            $query->where('start_at', '>=', $start_at);
+        }
+        if ($request->filled('search_end_at')) {
+            $end_at = Carbon::parse($request->input('search_end_at'))->subHours(9) ?? null;
+            $query->where('end_at', '<=', $end_at);
+        }
+    
+        $events = $query->paginate(10);
+        return $events;
+    }
+
+
+
+
     public function userHasEvents()
     {
         return $this->hasMany(UserHasEvent::class);
