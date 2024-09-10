@@ -99,7 +99,4 @@
             });
         });
     </script>
-<<<<<<< HEAD
 @endsection
-=======
->>>>>>> 6de40b4a52e79cf87dad5f1f6a826cca7b181b96
