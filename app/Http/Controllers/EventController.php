@@ -106,7 +106,7 @@ class EventController extends Controller
     {
         $venue_id = $request->route('venue_id');
         $events = Event::where('venue_id', $venue_id)->with('venue')->get();
-        return view('pages.event.space', compact('events'));
+        return view('pages.event.space', compact('events', 'venue_id'));
     }
 
 }
