@@ -41,5 +41,16 @@ class Event extends Model
     {
         return $this->belongsTo(Venue::class);
     }
-    
+
+    public function insertEvent($request, string $venue_id)
+    {
+        $event = $this->create([
+            'venue_id' => $venue_id,
+            'name' => $request->name,
+            'information' => $request->information,
+            'start_at' => $request->start_at,
+            'end_at' => $request->end_at,
+        ]);
+        return $event;
+    }
 }
