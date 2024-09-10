@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KawagoeLive</title>
+
+
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KawagoeLive</title>-->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -110,7 +108,7 @@
     </style>
 </head>
 <body>
-    <header>
+    <!--<header>
         <h1>KawagoeLive</h1>
         <nav>
             <a href="#">マイページ</a>
@@ -119,7 +117,7 @@
             <a href="#">予約確認</a>
             <a href="#">予約</a>
         </nav>
-    </header>
+    </header>-->
     <main>
         <h1>イベント一覧</h1>
         <input type="text" placeholder="入力">
@@ -169,5 +167,3 @@
             document.getElementById('modal').style.display = 'none';
         }
     </script>
-</body>
-</html>

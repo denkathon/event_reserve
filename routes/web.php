@@ -37,16 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/venue/create', [VenueController::class,'create'])->name('venue.create');
     Route::post('/venue/store', [VenueController::class,'store'])->name('venue.store');
     Route::get('/venue/show/{venue_id}', [VenueController::class,'show'])->name('venue.show');
-    Route::get('/venue/edit/{venue_id}', [VenueController::class,'edit'])->name('venue.edit');
-    Route::post('/venue/update/{venue_id}', [VenueController::class,'update'])->name('venue.update');
-    Route::post('/venue/destroy/{venue_id}', [VenueController::class,'destroy'])->name('venue.destroy');
 
     // Event関連
     Route::get('/event', [EventController::class,'index'])->name('event.index');
     Route::get('/venue/{venue_id}/event/space', [EventController::class, 'space'])->name('event.space');
     Route::get('/venue/{venue_id}/event/create', [EventController::class,'create'])->name('event.create');
     Route::post('/venue/{venue_id}/event/store', [EventController::class,'store'])->name('event.store');
-    Route::get('/event/show/{event_id}', [EventController::class,'show'])->name('event.show');
     Route::get('/event/edit/{event_id}', [EventController::class,'edit'])->name('event.edit');
     Route::post('/event/update/{event_id}', [EventController::class,'update'])->name('event.update');
     Route::post('/event/destroy/{event_id}', [EventController::class,'destroy'])->name('event.destroy');
