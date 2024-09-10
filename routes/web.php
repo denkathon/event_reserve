@@ -43,10 +43,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/venue/{venue_id}/event/space', [EventController::class, 'space'])->name('event.space');
     Route::get('/venue/{venue_id}/event/create', [EventController::class,'create'])->name('event.create');
     Route::post('/venue/{venue_id}/event/store', [EventController::class,'store'])->name('event.store');
+    Route::get('/event/show/{event_id}', [EventController::class,'show'])->name('event.show');
     Route::get('/event/edit/{event_id}', [EventController::class,'edit'])->name('event.edit');
     Route::post('/event/update/{event_id}', [EventController::class,'update'])->name('event.update');
     Route::post('/event/destroy/{event_id}', [EventController::class,'destroy'])->name('event.destroy');
-
+    
     // UserHasEvent関連
     Route::get('user_event/index', [UserHasEventController::class, 'index'])->name('user_event.index'); // ユーザーのイベント一覧
     Route::get('user_event/show/{user_event_id}', [UserHasEventController::class, 'show'])->name('user_event.show'); // イベントの詳細
