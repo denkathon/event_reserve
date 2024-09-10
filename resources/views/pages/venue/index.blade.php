@@ -21,7 +21,7 @@
         @else
             @foreach($venues as $venue)
                 <li class="venue-item">
-                    <a href="{{ route('event.space') }}" class="venue-link">
+                    <a href="{{ route('event.space', ['venue_id' => $venue->id]) }}" class="venue-link">
                         <div class="circle-icon"></div>
                         <div class="venue-details">
                             <!-- データベースのフィールドを表示 -->

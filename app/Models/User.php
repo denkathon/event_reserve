@@ -48,6 +48,8 @@ class User extends Authenticatable
         return $this->create([
             'name' => $request->name,
             'auth_id' => $auth_id,
+            'e_mail' => $request->e_mail,
+            'phone_number' => $request->phone_number,
         ]);
     }
 }

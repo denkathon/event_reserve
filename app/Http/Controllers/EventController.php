@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
-use App\Models\Venue;
-
+use App\Models\UserHasEvent;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    protected $event;
+    protected $event, $user_has_event;
     public function __construct()
     {
         $this->event = new Event();
+        $this->user_has_event = new UserHasEvent();
     }
     public function index(Request $request)
     {
@@ -29,11 +31,10 @@ class EventController extends Controller
      */
     public function create(Request $request)
     {
-         // クエリパラメータで start_time と end_time を受け取る
-         $startAt = $request->query('start_at');
-         $endAt = $request->query('end_at');
-         return view('pages.event.create', compact('startAt', 'endAt'));
-        //
+        $venue_id = $request->route('venue_id');
+        $startAt = $request->query('start_at');
+        $endAt = $request->query('end_at');
+        return view('pages.event.create', compact('venue_id','startAt', 'endAt'));
     }
 
     /**
@@ -41,17 +42,28 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $event = new Event();
-        $event->name = $request->name;
-        $event->venue_id = $request->input('venue_id');
-        $event->information = $request->information;
-        $event->venue_id = $request->venue_id;
-        $event->start_at = $request->start_at;
-        $event->end_at = $request->end_at;
-        $event->save();
-
-        return redirect()->route('pages.event.show', $event->id);
-        //
+        DB::beginTransaction();
+        try{
+            $user_id = Auth::user()->id;
+            $venue_id = $request->route('venue_id');
+            if($venue_id){
+                $event = $this->event->insertEvent($request, $venue_id);
+            } else{
+                return redirect()->route('event.space', ['venue_id' => $venue_id])->with('flash.error', '登録に失敗しました。');
+            }
+    
+            if($user_id){
+                $registerUserHasEvent = $this->user_has_event->insertUserHasEvent($request, $user_id, $event->id);
+                DB::commit();
+                return redirect()->route('event.show', ['event_id' => $event->id])->with('flash.success', '登録に成功しました。');
+            } else {
+                DB::rollBack();
+                return redirect()->route('event.space', ['venue_id' => $venue_id])->with('flash.error', '登録に失敗しました。');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect('/login')->with('flash.error', '登録に失敗しました。');
+        }
     }
 
     /**
@@ -103,12 +115,11 @@ class EventController extends Controller
         //
     }
 
-    public function space(Request $request, /*string $id*/)
+    public function space(Request $request)
     {
-        //$venue_id = $request->route('venue_id');
-        $events = Event::all();
-        return view('pages.event.space', compact('events'));
-        //
+        $venue_id = $request->route('venue_id');
+        $events = Event::where('venue_id', $venue_id)->with('venue')->get();
+        return view('pages.event.space', compact('events', 'venue_id'));
     }
 
 }

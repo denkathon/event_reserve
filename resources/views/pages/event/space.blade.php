@@ -39,7 +39,7 @@
                                     @if($event)
                                         <a href="{{ route('event.show', ['event_id' => $event->id]) }}" class="btn event-btn">{{ $event->name }}</a>
                                     @else
-                                        <a href="javascript:void(0);" onclick="navigateToCreatePage('{{ $startAt }}', '{{ $endAt }}')" class="btn empty-btn">予約する</a>
+                                        <a href="javascript:void(0);" onclick="navigateToCreatePage('{{ $venue_id }}', '{{ $startAt }}', '{{ $endAt }}')" class="btn empty-btn">予約する</a>
                                     @endif
                                 </td>
                             @endfor
@@ -53,8 +53,8 @@
 
 <!-- JSで新規イベント作成ページに遷移 -->
 <script>
-    function navigateToCreatePage(startAt, endAt) {
-        const url = `/event/create?start_at=${startAt}&end_at=${endAt}`;
+    function navigateToCreatePage(venueId, startAt, endAt) {
+        const url = `/venue/${venueId}/event/create?start_at=${startAt}&end_at=${endAt}`;
         window.location.href = url;
     }
 </script>

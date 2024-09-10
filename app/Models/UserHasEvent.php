@@ -44,4 +44,13 @@ class UserHasEvent extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    public function insertUserHasEvent($request, string $user_id, string $event_id)
+    {
+        return $this->create([
+            'user_id' => $user_id,
+            'event_id' => $event_id,
+            'status' => 1
+        ]);
+    }
 }
