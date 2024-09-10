@@ -19,7 +19,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('auth')->group(function () {
+// Route::middleware('auth')->group(function () {
     Route::get('/venue', [VenueController::class, 'index']);
     Route::get('/', function () {
         return view('pages.top.index');
@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::post('user_event/store', [UserHasEventController::class, 'store'])->name('user_event.store'); // イベント参加
     Route::put('user_event/update/{user_event_id}', [UserHasEventController::class, 'update'])->name('user_event.update'); // イベント参加状況の更新
     Route::delete('user_event/destroy/{user_event_id}', [UserHasEventController::class, 'destroy'])->name('user_event.destroy'); // イベント参加取消
-});
+// });
 
     //以下は参考
     // Route::get('/coupon_lineup/index', [CouponLineupController::class,'index'])->name('coupon_lineup.index');

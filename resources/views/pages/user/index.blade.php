@@ -2,7 +2,7 @@
 
 @section('content')
 <h2 class="title">マイページ</h2>
-<div class="container" style="display: flex; height: 100vh;">
+<div class="container" style="display: flex; height: 50vh;flex-direction: row;">
 
     <!-- Sidebar Menu -->
     <div style="flex: 1; background-color: white; padding: 20px; border-right: 1px solid #ccc; min-width: 250px;">
