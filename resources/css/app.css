@@ -1,0 +1,542 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+header {
+    background-color: #fff;
+    padding: clamp(5px, 1vw, 10px) 0;
+    color: #000;
+    border-bottom: 2px solid #000;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 clamp(5px, 2vw, 20px);
+    overflow: hidden;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: clamp(10px, 2vw, 20px);
+    justify-content: flex-end;
+    white-space: nowrap;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+nav ul li {
+    flex-shrink: 1;
+}
+
+nav ul li a {
+    color: #000;
+    text-decoration: none;
+    font-size: clamp(14px, 2vw, 24px);
+    transition: color 0.3s ease; /* ホバー時の色変更をスムーズに */
+}
+
+nav ul li a:hover {
+    color: #007bff; /* ホバー時の色をブルーに変更 */
+}
+
+/* ページヘッダー用のスタイル */
+h1 {
+    font-family: 'Dancing Script, sans-serif';
+    font-size: clamp(28px, 5vw, 56px);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 80px; /* 固定ヘッダーの下に余白を追加 */
+}
+
+/* トップページのアニメーション付きスタイル */
+/* resources/css/app.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    padding: clamp(20px, 5vw, 50px);
+}
+
+.heading {
+    font-size: clamp(28px, 5vw, 72px);
+    font-weight: bold;
+    color: #333;
+    margin-bottom: clamp(10px, 2vw, 20px);
+}
+
+.paragraph {
+    font-size: clamp(16px, 2.5vw, 36px);
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+/* Container and title styling */
+.venue-container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.venue-title {
+    margin-top: 40px; /* 他のページには影響なし */
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+.venue-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px; /* リストの上部余白も少し調整 */
+}
+
+/* .venue-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+
+.venue-item {
+    margin-bottom: 10px;
+    list-style: none; /* リストマーカーを削除 */
+}
+
+
+.highlight {
+    background-color: #fce6b2; /* 特定のアイテムの背景色を変更 */
+}
+
+.circle-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 20px;
+}
+
+.highlight-circle {
+    background-color: #000; /* 特定のアイテムのアイコンを黒に変更 */
+}
+
+.venue-details {
+    flex-grow: 1;
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+/* リンクのデフォルトスタイルをリセット */
+.venue-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none; /* リンクの下線を削除 */
+    color: inherit; /* テキストの色を継承 */
+    width: 100%; /* リンクがリスト全体を覆うように */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.venue-link:hover {
+    background-color: #e0e0e0; /* ホバー時の背景色 */
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .venue-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .venue-details {
+        margin-top: 10px;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.toppage-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f9f9f9;
+    padding: clamp(20px, 5vw, 50px);
+}
+
+.toppage-heading {
+    font-size: clamp(28px, 5vw, 72px);
+    font-weight: bold;
+    color: #333;
+    margin-bottom: clamp(10px, 2vw, 20px);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.8s ease-out, transform 1.8s ease-out;
+}
+
+.toppage-paragraph {
+    font-size: clamp(16px, 2.5vw, 36px);
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
+    text-align: center;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.8s ease-out, transform 1.8s ease-out;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.auth-container {
+    background-color: #ffffff;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 120%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.auth-heading {
+    font-size: 32px; /* 増やしました */
+    margin-bottom: 25px; /* 増やしました */
+}
+
+.auth-form-group {
+    margin-bottom: 20px; /* 増やしました */
+    text-align: left;
+    width: 100%;
+}
+
+.auth-form-group label {
+    display: block;
+    font-size: 18px; /* 増やしました */
+    margin-bottom: 10px; /* 増やしました */
+}
+
+.auth-form-group input {
+    width: 100%;
+    padding: 15px; /* 増やしました */
+    font-size: 16px; /* 増やしました */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.auth-submit-button {
+    width: 100%;
+    padding: 15px; /* 増やしました */
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px; /* 増やしました */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-submit-button:hover {
+    background-color: #0056b3;
+}
+
+.auth-link {
+    display: inline-block;
+    margin-top: 15px; /* 増やしました */
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px; /* 増やしました */
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+.alert-success {
+    position: fixed;
+    top: 9%;
+    width: 100%;
+    color: #1d643b;
+    background-color: #d7f3e3;
+    border-color: #c7eed8;
+    transform: translateY(-50%);
+    text-align: center;
+    z-index: 99;
+}
+.alert-error {
+    position: fixed;
+    top: 9%;
+    width: 100%;
+    color: #fff;
+    background-color: #f00;
+    border-color: #f00;
+    transform: translateY(-50%);
+    text-align: center;
+    z-index: 99;
+}
+//space
+.schedule-page {
+    padding: 20px;
+    margin-top: 100px; /* 必要に応じて調整 */
+}
+
+.schedule {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.empty-btn {
+    background-color: #6c757d;
+}
+
+.event-btn {
+    background-color: #28a745;
+}
+
+//event
+.event-detail-page {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* イベント詳細コンテナ */
+.event-detail {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* イベント名 */
+.event-detail h2 {
+    font-size: 2.5rem; /* 40px */
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* イベント情報のラベル */
+.event-detail p {
+    font-size: 1.25rem; /* 20px */
+    color: #555;
+    margin: 10px 0;
+}
+
+/* 参加ユーザーセクション */
+.event-detail h3 {
+    font-size: 1.5rem; /* 24px */
+    color: #444;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* ユーザー情報リスト */
+.event-detail ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.event-detail li {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* ユーザー情報のラベル */
+.event-detail li p {
+    font-size: 1rem; /* 16px */
+    color: #666;
+}
+
+/* 戻るボタン */
+.event-detail a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.125rem; /* 18px */
+    color: #fff;
+    background-color: #4a5568;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.event-detail a:hover {
+    background-color: #2d3748;
+}
+
+.event-create-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0px;
+    background-color: #f3f4f6; /* 背景色 */
+}
+
+.event-create-heading {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.event-create-form {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    padding: 100px;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.event-form-group {
+    margin-bottom: 20px;
+}
+
+.event-label {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.event-input,
+.event-textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.event-submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.event-submit-button:hover {
+    background-color: #0056b3;
+}
+
+.event-back-button {
+    padding: 15px;
+    background-color: #6c757d;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    max-width: 600px;
+}
+
+.event-back-button:hover {
+    background-color: #565e64;
+}
+
+.event-time {
+    font-size: 20px;
+    color: #666;
+}
+

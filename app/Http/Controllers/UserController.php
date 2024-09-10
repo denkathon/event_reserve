@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    protected $user;
+    public function __construct()
     {
-        //
+        $this->user = new User();
+    }
+
+    public function index(Request $request)
+    {
+        // return view('pages.user.index');
+        $users = User::all(); // すべてのユーザーを取得
+        return view('pages.user.index', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // 
     }
 
     /**
@@ -27,7 +33,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $check_auth_id = $request->check_auth_id;
+        if ($check_auth_id) {
+            $registerUser = $this->user->insertUser($request);
+            return redirect()->view('pages.user.index')->with('success', '登録に成功しました。');
+        } else {
+            return redirect()->view('pages.top.index')->with('error', '登録に失敗しました。');
+        }
     }
 
     /**
@@ -35,7 +47,11 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::find($id);
+        $events = $user->userHasEvents->map(function ($userHasEvent){
+            return $userHasEvent->event;
+        });
+        return view('pages.users.show', compact('users'));
     }
 
     /**
@@ -43,7 +59,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        $user->adjustTimezone();
+        return view('pages.coupon_lineup.edit', compact('coupon_lineup'));
     }
 
     /**
@@ -59,6 +77,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('users.index')->with('flash.success', '削除に成功しました。');
     }
 }

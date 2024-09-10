@@ -1,0 +1,30 @@
+.
+├── css
+│   └── app.css
+├── js
+├── output.txt
+├── ts
+│   ├── components
+│   │   ├── Example.tsx
+│   │   └── Header.tsx
+│   └── pages
+│       ├── EventSpacePage.tsx
+│       ├── TopPage.tsx
+│       └── VenuePage.tsx
+└── views
+    ├── common
+    │   └── home.blade.php
+    ├── components
+    │   └── header.blade.php
+    └── pages
+        ├── event
+        │   ├── edit.blade.php
+        │   └── index.blade.php
+        ├── toppage.blade.php
+        ├── user
+        │   ├── edit.blade.php
+        │   └── index.blade.php
+        └── venue
+            └── index.blade.php
+
+12 directories, 15 files
