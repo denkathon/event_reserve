@@ -10,7 +10,7 @@ class UserController extends Controller
     protected $user;
     public function __construct()
     {
-        $this->users = new User();
+        $this->user = new User();
     }
 
     public function index(Request $request)
