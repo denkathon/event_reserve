@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
 
     // Event関連
     Route::get('/event', [EventController::class,'index'])->name('event.index');
-    Route::get('venue/{venue_id}/event/space', [EventController::class, 'space'])->name('event.space');
+    Route::get('/venue/{venue_id}/event/space', [EventController::class, 'space'])->name('event.space');
     Route::get('/venue/{venue_id}/event/create', [EventController::class,'create'])->name('event.create');
     Route::post('/venue/{venue_id}/event/store', [EventController::class,'store'])->name('event.store');
     Route::get('/event/show/{event_id}', [EventController::class,'show'])->name('event.show');
