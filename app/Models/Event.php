@@ -25,11 +25,11 @@ class Event extends Model
         'venue_id',
         'name',
         'information',
-        'start_at',
-        'end_at',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+        'start_at',//datetime型
+        'end_at',//datetime型
+        'created_at',//datetime型
+        'updated_at',//datetime型
+        'deleted_at',//datetime型
     ];
 
     public function userHasEvents()
@@ -41,4 +41,5 @@ class Event extends Model
     {
         return $this->belongsTo(Venue::class);
     }
+    
 }

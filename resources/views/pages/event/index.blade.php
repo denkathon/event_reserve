@@ -1,173 +1,102 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KawagoeLive</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+@extends('layouts.app')
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 2px solid black;
-        }
-
-        nav a {
-            margin-right: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            color: black;
-            padding: 10px;
-            border: 1px solid black;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            width: 300px;
-            margin-right: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: black;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 20px;
-            background-color: #fffbea;
-            border: 2px solid #f4e19e;
-            border-radius: 10px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        li .circle {
-            width: 20px;
-            height: 20px;
-            background-color: black;
-            border-radius: 50%;
-            margin-right: 15px;
-        }
-
-        .event-info {
-            font-size: 16px;
-        }
-
-        /* モーダルのスタイル */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-        }
-
-        .close-button {
-            background-color: black;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>KawagoeLive</h1>
-        <nav>
-            <a href="#">マイページ</a>
-            <a href="#">イベントスペース一覧</a>
-            <a href="/events">イベント一覧</a>
-            <a href="#">予約確認</a>
-            <a href="#">予約</a>
-        </nav>
-    </header>
-    <main>
-        <h1>イベント一覧</h1>
-        <input type="text" placeholder="入力">
-        <button>検索</button>
-        <ul>
+@section('content')
+    <main style="padding: 20px;">
+        <h1 style="font-size: 24px; margin-bottom: 20px;">イベント一覧</h1>
+        <input type="text" id="searchInput" placeholder="検索 (例: '2024-09-10', '14:00', 'Monday')" style="padding: 10px; border: 1px solid #ccc; width: 300px; margin-right: 10px;">
+        <button id="searchButton" style="padding: 10px 20px; background-color: black; color: white; border: none; cursor: pointer;">検索</button>
+        <ul id="eventList" style="list-style: none; padding: 0; margin-top: 20px;">
             @foreach($events as $event)
-            <li data-name="{{ $event->name }}" data-information="{{ $event->information }}" data-details="{{ $event->details }}" data-start_at="{{ $event->search_start_at }}" data-date="{{ $event->date }}">
-                <div class="circle"></div>
-                <div class="event-info">{{ $event->name }} - {{ $event->information }}, {{ $event->search_start_at }}, {{ $event->search_date }}</div>
+            @php
+                $startTime = \Carbon\Carbon::parse($event->start_at)->format('H:i');
+                $endTime = \Carbon\Carbon::parse($event->end_at)->format('H:i');
+                $startDate = \Carbon\Carbon::parse($event->start_at)->format('Y-m-d');
+                $startDay = \Carbon\Carbon::parse($event->start_at)->format('l'); // 曜日 (例: Monday)
+                $startDateTime = \Carbon\Carbon::parse($event->start_at)->format('Y-m-d');
+                $eventDetails = $event->information;
+            @endphp
+            <li data-name="{{ $event->name }}" data-information="{{ $eventDetails }}" data-start_date="{{ $startDate }}" data-start_day="{{ $startDay }}" data-start_time="{{ $startTime }}" data-end_time="{{ $endTime }}" data-venue="{{ $event->venue->name }}" style="display: flex; align-items: center; margin-bottom: 10px; padding: 20px; background-color: #fffbea; border: 2px solid #f4e19e; border-radius: 10px; position: relative; cursor: pointer;">
+                <div class="circle" style="width: 20px; height: 20px; background-color: black; border-radius: 50%; margin-right: 15px;"></div>
+                <div class="event-info" style="font-size: 16px;">
+                    {{ $event->name }} In {{ $event->venue->name }} from {{ $startTime }} to {{ $endTime }}
+                </div>
             </li>
             @endforeach
         </ul>
     </main>
 
     <!-- モーダルのHTML -->
-    <div class="modal-overlay" id="modal">
-        <div class="modal">
+    <div class="modal-overlay" id="modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center;">
+        <div class="modal" style="background-color: white; padding: 20px; border-radius: 10px; width: 300px; text-align: center;">
             <h2 id="modal-title">イベント名</h2>
+            <p id="modal-start-date">開始日付</p>
+            <p id="modal-start-time">開始時間</p>
+            <p id="modal-end-time">終了時間</p>
+            <p id="modal-venue">会場</p>
             <p id="modal-details">イベント詳細情報</p>
-            <p id="modal-date">イベント日付</p>
-            <button class="close-button" onclick="closeModal()">閉じる</button>
+            <button class="close-button" onclick="closeModal()" style="background-color: black; color: white; padding: 10px 20px; border: none; cursor: pointer;">閉じる</button>
         </div>
     </div>
 
     <script>
-        // イベントリストの各項目にクリックイベントを追加
-        const listItems = document.querySelectorAll('li');
-        listItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // イベントの詳細情報を取得
-                const eventName = this.getAttribute('data-name');
-                const eventDetails = this.getAttribute('data-information');
-                const eventDate = this.getAttribute('data-search_start_at');
+        document.addEventListener('DOMContentLoaded', function() {
+            // イベントリストの各項目にクリックイベントを追加
+            const listItems = document.querySelectorAll('li');
+            listItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // イベントの詳細情報を取得
+                    const eventName = this.getAttribute('data-name');
+                    const eventStartDate = this.getAttribute('data-start_date');
+                    const eventStartDay = this.getAttribute('data-start_day');
+                    const eventStartTime = this.getAttribute('data-start_time');
+                    const eventEndTime = this.getAttribute('data-end_time');
+                    const eventVenue = this.getAttribute('data-venue');
+                    const eventDetails = this.getAttribute('data-information');
 
-                // モーダルに情報を表示
-                document.getElementById('modal-title').textContent = eventName;
-                document.getElementById('modal-details').textContent = eventDetails;
-                document.getElementById('modal-date').textContent = eventDate;
+                    // モーダルに情報を表示
+                    document.getElementById('modal-title').textContent = `イベント名: ${eventName}`;
+                    document.getElementById('modal-start-date').textContent = `開始日付: ${eventStartDate} (${eventStartDay})`;
+                    document.getElementById('modal-start-time').textContent = `開始時間: ${eventStartTime}`;
+                    document.getElementById('modal-end-time').textContent = `終了時間: ${eventEndTime}`;
+                    document.getElementById('modal-venue').textContent = `会場: ${eventVenue}`;
+                    document.getElementById('modal-details').textContent = `イベント詳細: ${eventDetails}`;
 
-                // モーダルを表示
-                document.getElementById('modal').style.display = 'flex';
+                    // モーダルを表示
+                    document.getElementById('modal').style.display = 'flex';
+                });
+            });
+
+            // モーダルを閉じる関数
+            window.closeModal = function() {
+                document.getElementById('modal').style.display = 'none';
+            }
+
+            // 検索機能の追加
+            document.getElementById('searchButton').addEventListener('click', function() {
+                const searchInput = document.getElementById('searchInput').value.toLowerCase();
+                const listItems = document.querySelectorAll('#eventList li');
+                
+                listItems.forEach(item => {
+                    const name = item.getAttribute('data-name').toLowerCase();
+                    const venue = item.getAttribute('data-venue').toLowerCase();
+                    const information = item.getAttribute('data-information').toLowerCase();
+                    const startDate = item.getAttribute('data-start_date').toLowerCase();
+                    const startTime = item.getAttribute('data-start_time').toLowerCase();
+                    const startDay = item.getAttribute('data-start_day').toLowerCase();
+
+                    // 検索ワードが名前、会場、詳細、開始日時、開始時間、または開始曜日に含まれていれば表示、それ以外は非表示
+                    if (name.includes(searchInput) || venue.includes(searchInput) || information.includes(searchInput) || startDate.includes(searchInput) || startTime.includes(searchInput) || startDay.includes(searchInput)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+
+            // 入力フィールドの内容が変わるたびに検索
+            document.getElementById('searchInput').addEventListener('input', function() {
+                document.getElementById('searchButton').click();
             });
         });
-
-        // モーダルを閉じる関数
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
     </script>
-</body>
-</html>
+@endsection
