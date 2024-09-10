@@ -29,11 +29,10 @@ class EventController extends Controller
      */
     public function create(Request $request)
     {
-         // クエリパラメータで start_time と end_time を受け取る
-         $startAt = $request->query('start_at');
-         $endAt = $request->query('end_at');
-         return view('pages.event.create', compact('startAt', 'endAt'));
-        //
+        // クエリパラメータで start_time と end_time を受け取る
+        $startAt = $request->query('start_at');
+        $endAt = $request->query('end_at');
+        return view('pages.event.create', compact('startAt', 'endAt'));
     }
 
     /**
@@ -103,12 +102,11 @@ class EventController extends Controller
         //
     }
 
-    public function space(Request $request, /*string $id*/)
+    public function space(Request $request)
     {
-        //$venue_id = $request->route('venue_id');
-        $events = Event::all();
+        $venue_id = $request->route('venue_id');
+        $events = Event::where('venue_id', $venue_id)->with('venue')->get();
         return view('pages.event.space', compact('events'));
-        //
     }
 
 }
