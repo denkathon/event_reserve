@@ -21,6 +21,7 @@ class EventController extends Controller
     }
     public function index(Request $request)
     {
+        
         $events = Event::all();
         return view('pages.event.index', compact('events'));
         //
