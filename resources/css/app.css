@@ -336,7 +336,7 @@ html, body {
     text-align: center;
     z-index: 99;
 }
-//space
+
 .schedule-page {
     padding: 20px;
     margin-top: 100px; /* 必要に応じて調整 */
@@ -352,7 +352,7 @@ h1 {
 }
 
 table {
-    width: 100%;
+    width: 150%;
     border-collapse: collapse;
 }
 
@@ -378,7 +378,6 @@ th, td {
     background-color: #28a745;
 }
 
-//event
 .event-detail-page {
     padding: 20px;
     max-width: 900px;
