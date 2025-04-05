@@ -3,7 +3,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet" />
     <nav style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 clamp(5px, 2vw, 20px); overflow: hidden;">
         <h1 style="margin: 0; font-family: 'Dancing Script, sans-serif'; font-size: clamp(28px, 5vw, 56px); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
-            KawagoeLive
+            <a href="/" style="text-decoration: none; color: inherit;">
+                KawagoeLive
+            </a>
         </h1>
         
         <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: clamp(10px, 2vw, 20px); white-space: nowrap; justify-content: flex-end; flex-wrap: wrap; max-width: 100%; padding-right: 20px;">
