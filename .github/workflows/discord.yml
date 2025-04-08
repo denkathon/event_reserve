@@ -1,0 +1,103 @@
+name: Discord Message Notify
+
+on:
+  pull_request:
+    types: [opened, closed]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, closed]
+
+env:
+  DISCORD_WEBHOOK_ISSUES: ${{ secrets.DISCORD_WEBHOOK_ISSUES }}
+  DISCORD_WEBHOOK_PR: ${{ secrets.DISCORD_WEBHOOK_PR }}
+
+jobs:
+  discord_notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set event type
+        id: set-type
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            if [[ "${{ github.event.action }}" == "opened" ]]; then
+              echo "type=pr_created" >> $GITHUB_OUTPUT
+            elif [[ "${{ github.event.action }}" == "closed" && "${{ github.event.pull_request.merged }}" == "true" ]]; then
+              echo "type=pr_merged" >> $GITHUB_OUTPUT
+            fi
+          elif [[ "${{ github.event_name }}" == "pull_request_review" && "${{ github.event.review.state }}" == "approved" ]]; then
+            echo "type=pr_approved" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event_name }}" == "issues" ]]; then
+            if [[ "${{ github.event.action }}" == "opened" ]]; then
+              echo "type=issue_opened" >> $GITHUB_OUTPUT
+            elif [[ "${{ github.event.action }}" == "closed" ]]; then
+              echo "type=issue_closed" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Send message to Discord
+        if: steps.set-type.outputs.type != ''
+        run: |
+          TYPE=${{ steps.set-type.outputs.type }}
+          ACTOR="${{ github.actor }}"
+          AVATAR_URL="https://github.com/$ACTOR.png"
+
+          if [[ "$TYPE" == issue_* ]]; then
+            URL="${{ github.event.issue.html_url }}"
+            TITLE="${{ github.event.issue.title }}"
+            if [ "$TYPE" = "issue_opened" ]; then
+              DESCRIPTION="🐛 Issue が作成されました"
+              COLOR=15105570
+              WEBHOOK=$DISCORD_WEBHOOK_ISSUES
+            elif [ "$TYPE" = "issue_closed" ]; then
+              DESCRIPTION="✅ Issue がクローズされました"
+              COLOR=8359053
+              WEBHOOK=$DISCORD_WEBHOOK_ISSUES
+            fi
+          elif [[ "$TYPE" == pr_* ]]; then
+            URL="${{ github.event.pull_request.html_url || github.event.review.pull_request_url }}"
+            TITLE="${{ github.event.pull_request.title || github.event.review.pull_request.title }}"
+            if [ "$TYPE" = "pr_created" ]; then
+              DESCRIPTION="🚀 PR が作成されました"
+              COLOR=3447003
+            elif [ "$TYPE" = "pr_approved" ]; then
+              DESCRIPTION="✅ PR が承認されました"
+              COLOR=3066993
+            elif [ "$TYPE" = "pr_merged" ]; then
+              DESCRIPTION="🎉 PR がマージされました"
+              COLOR=10181046
+            fi
+            WEBHOOK=$DISCORD_WEBHOOK_PR
+          fi
+
+          # JSONでEmbed形式のメッセージを作成して送信
+          PAYLOAD=$(jq -n \
+            --arg title "$TITLE" \
+            --arg description "$DESCRIPTION" \
+            --arg url "$URL" \
+            --arg actor "$ACTOR" \
+            --arg avatar "$AVATAR_URL" \
+            --argjson color "$COLOR" \
+            '{
+              "embeds": [
+                {
+                  "title": $title,
+                  "url": $url,
+                  "description": $description,
+                  "color": $color,
+                  "author": {
+                    "name": $actor,
+                    "icon_url": $avatar
+                  },
+                  "footer": {
+                    "text": ("by " + $actor)
+                  }
+                }
+              ]
+            }')
+
+
+          curl -H "Content-Type: application/json" \
+              -X POST \
+              -d "$PAYLOAD" \
+              $WEBHOOK
