@@ -90,11 +90,12 @@ jobs:
                     "icon_url": $avatar
                   },
                   "footer": {
-                    "text": "by " + $actor
+                    "text": ("by " + $actor)
                   }
                 }
               ]
             }')
+
 
           curl -H "Content-Type: application/json" \
               -X POST \
