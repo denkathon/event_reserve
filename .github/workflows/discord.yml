@@ -90,7 +90,7 @@ jobs:
                     "icon_url": $avatar
                   },
                   "footer": {
-                    "text": ("by " + $actor)
+                    "text": ("by \($actor)")
                   }
                 }
               ]
